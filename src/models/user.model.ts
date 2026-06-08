@@ -17,7 +17,7 @@ let userSchema = new mongoose.Schema<IUser>({
     password: {
         type: String,
         required: [true, "Password is required"],
-        minlength: [8, "Password must be at least 8 characters long"]
+        minlength: [4, "Password must be at least 4 characters long"]
     },
     mobile: {
         type: String,
@@ -30,6 +30,11 @@ userSchema.pre("save", function (): void {
     if (!this.isModified("password")) return;
     this.password = bcrypt.hashSync(this.password, 10);
 });
+
+userSchema.methods.comparePassword = function (candidatePassword: string): boolean {
+    return bcrypt.compareSync(candidatePassword, this.password);
+}
+
 
 const userModel = mongoose.models.user || mongoose.model("user", userSchema);
 
