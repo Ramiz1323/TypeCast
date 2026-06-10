@@ -6,7 +6,6 @@ import userModel from "@/models/user.model";
 
 export async function POST(req: NextRequest) {
     try {
-        //create mongodb connection and create usermodel
         await connectDB();
         const User = userModel;
         const body: RegisterBody = await req.json();
