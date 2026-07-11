@@ -26,7 +26,6 @@ export async function POST(req: NextRequest) {
             }, { status: 400 });
         }
 
-        //Create the user
         const user = await User.create({
             name,
             email,
@@ -36,10 +35,9 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json<ApiResponse<null>>({
             success: true,
-            message: "User created successfully",
-            data: user
+            message: "User created successfully"
         }, { status: 201 });
-        } catch (error) {
+    } catch (error) {
         console.log("error while creating user", error);
         return NextResponse.json<ApiResponse<null>>({
             success: false,

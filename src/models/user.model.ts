@@ -1,8 +1,15 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Model } from "mongoose";
 import { IUser } from "@/types/user.types";
 import bcrypt from 'bcrypt';
 
-let userSchema = new mongoose.Schema<IUser>({
+interface IUserMethods {
+    comparePassword(candidatePassword: string): boolean;
+}
+
+type UserModelType = Model<IUser & IUserMethods> //second parameter is for statics and methods in schema
+
+let userSchema = new mongoose.Schema<IUser & IUserMethods, UserModelType>(
+    {
     name: {
         type: String,
         trim: true,
