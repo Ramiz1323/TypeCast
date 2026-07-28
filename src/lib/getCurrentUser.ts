@@ -7,7 +7,6 @@ export async function getCurrentUser() {
     if(!token) throw new Error("Token Not Found");
 
     const decode = verifyToken(token);
-    console.log("Decode Value", decode);
 
     if(!decode) throw new Error ("Unauthorized");
 
