@@ -3,6 +3,8 @@ import { ApiResponse } from "@/types/api.types";
 import connectDB from "@/lib/db";
 import userModel from "@/models/user.model";
 import { LoginBody } from "@/types/user.types";
+import { generateToken } from "@/lib/jwt";
+import { cookies } from "next/headers";
 
 export async function POST(req: NextRequest) {
     try {
@@ -27,10 +29,18 @@ export async function POST(req: NextRequest) {
             }, { status: 401 });
         }
 
+        let token = generateToken({ userId: isExisted._id.toString() });
+        let cookiesStore = await cookies();
+        cookiesStore.set("token", token, {
+            httpOnly:true,
+            secure:true,
+            maxAge: 60 * 60,
+            path:"/"
+        });
+
         return NextResponse.json<ApiResponse<string>>({
             success: true,
             message: "User logged in successfully",
-            data: isExisted
         }, { status: 200 });
 
     } catch (error) {

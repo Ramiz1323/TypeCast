@@ -1,3 +1,5 @@
+import { Types } from "mongoose"
+
 export interface IUser {
     _id: string,
     name: string,
@@ -21,6 +23,6 @@ export interface LoginBody {
 }
 
 export interface JWTPayload{
-    userId: string,
+    userId: Types.ObjectId,
     email?: string
 }

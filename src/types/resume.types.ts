@@ -46,4 +46,6 @@ export interface IResume {
     skills?: string[];
     certifications?: string[];
     achievements?: string[];
+    createdAt?: Date;
+    updatedAt?: Date;
 }
