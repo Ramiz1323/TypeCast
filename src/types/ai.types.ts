@@ -1,7 +1,7 @@
 export interface GenerateSummaryBody {
     experienceLevel: string;
     skills: string[];
-    jobtitle: string;
+    jobTitle: string;
 }
 
 export interface GenerateSkillsBody {
