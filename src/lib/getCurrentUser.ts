@@ -11,5 +11,5 @@ export async function getCurrentUser() {
 
     if(!decode) throw new Error ("Unauthorized");
 
-    return decode;
+    return decode.userId;
 }
