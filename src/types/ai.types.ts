@@ -11,7 +11,7 @@ export interface GenerateSkillsBody {
 
 export interface GenerateProjectDescriptionBody {
     experienceLevel: string;
-    jobTitle: string;
+    jobRole: string;
     techStack: string[];
 }
 
