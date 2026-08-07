@@ -6,9 +6,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
     try {
         const body: GenerateProjectDescriptionBody = await req.json();
-        const { experienceLevel, techStack, jobRole } = body;
+        const { experienceLevel, projectName, projectTitle, projectType, role, technologies } = body;
 
-        if (!experienceLevel || !techStack || !jobRole) {
+        if (!experienceLevel || !projectName || !projectTitle || !projectType || !role || !technologies) {
             return NextResponse.json<ApiResponse<null>>({
                 success: false,
                 message: "Please provide all the required fields"
@@ -20,11 +20,20 @@ export async function POST(req: NextRequest) {
         
         Generate a professional ATS-friendly project description using the details below.
         
-        Job Role:
-        ${jobRole}
+        Project Name:
+        ${projectName}
         
-        Tech Stack:
-        ${techStack}
+        Project Title:
+        ${projectTitle}
+        
+        Project Type:
+        ${projectType}
+        
+        Role:
+        ${role}
+        
+        Technologies:
+        ${technologies}
         
         Experience Level:
         ${experienceLevel}
