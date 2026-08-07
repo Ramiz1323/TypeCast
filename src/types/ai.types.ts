@@ -20,7 +20,7 @@ export interface GenerateProjectDescriptionBody {
 
 export interface GenerateExperienceDescriptionBody {
     experienceLevel: string;
-    techStack: string[];
+    technologies: string[];
     yearsOfExperience: number;
     jobRole: string;
 }
