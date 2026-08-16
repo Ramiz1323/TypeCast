@@ -12,11 +12,11 @@ export interface LoginPayload{
 }
 
 export const registerApi = async (payload: RegisterPayload) => {
-    const response = await axios.post("/api/auth/register", payload);
+    const response = await axios.post("/api/register", payload);
     return response.data;
 }
 
 export const loginApi = async (payload: LoginPayload) => {
-    const response = await axios.post("/api/auth/login", payload);
+    const response = await axios.post("/api/login", payload);
     return response.data;
 }
