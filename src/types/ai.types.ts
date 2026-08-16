@@ -28,3 +28,11 @@ export interface GenerateExperienceDescriptionBody {
 export interface ImproveContentBody {
     content: string;
 }
+
+export interface AtsScoreResult {
+    atsScore: number;
+}
+
+export interface AtsScoreBody {
+  resumeText: string;
+}
