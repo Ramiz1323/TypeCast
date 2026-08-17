@@ -10,38 +10,17 @@ export const createResumeApi = async (payload: IResume) => {
 };
 
 /**
- * Get all resumes for a specific user
+ * Get all resume
  */
-export const getResumesApi = async (userId: string) => {
-  const response = await axios.get<IResume[]>(`/api/resumes?userId=${userId}`);
-  return response.data;
-};
+export const getAllResumesApi = async () => {
+    const response = await axios.get<IResume[]>("/api/resumes");
+    return response.data;
+}
 
 /**
- * Get a single resume by ID
+ * Get resume by id
  */
 export const getResumeByIdApi = async (resumeId: string) => {
-  const response = await axios.get<IResume>(`/api/resumes/${resumeId}`);
-  return response.data;
-};
-
-/**
- * Update an existing resume
- */
-export const updateResumeApi = async (
-  resumeId: string,
-  payload: Partial<IResume>
-) => {
-  const response = await axios.put<IResume>(`/api/resumes/${resumeId}`, payload);
-  return response.data;
-};
-
-/**
- * Delete a resume
- */
-export const deleteResumeApi = async (resumeId: string) => {
-  const response = await axios.delete<{ success: boolean }>(
-    `/api/resumes/${resumeId}`
-  );
-  return response.data;
-};
+    const response = await axios.get<IResume[]>(`/api/resumes/${resumeId}`);
+    return response.data;
+}
