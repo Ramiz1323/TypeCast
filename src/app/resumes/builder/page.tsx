@@ -38,14 +38,17 @@ import {
   Edit,
 } from "lucide-react";
 
+import { useAuth } from "@/context/AuthContext";
+
 export default function ResumeBuilderPage() {
   const router = useRouter();
+  const { user } = useAuth();
 
   // Resume Form State
-  const [title, setTitle] = useState("Full Stack Software Engineer Resume");
+  const [title, setTitle] = useState("Software Engineer Resume");
   const [personalInfo, setPersonalInfo] = useState<IPersonalInfo>({
-    fullname: "Alex Mercer",
-    email: "alex.mercer@example.com",
+    fullname: user?.name || "Alex Mercer",
+    email: user?.email || "alex.mercer@example.com",
     mobile: "+1 (555) 234-5678",
     location: "San Francisco, CA",
     github: "github.com/alexmercer",
