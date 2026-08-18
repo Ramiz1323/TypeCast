@@ -8,13 +8,12 @@ import {
   Sparkles,
   FileText,
   BarChart2,
-  User,
   LogIn,
-  UserPlus,
   LogOut,
   ChevronDown,
   Loader2,
   LayoutDashboard,
+  ArrowRight,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -29,7 +28,12 @@ export default function Navbar() {
         { href: "/resumes/builder", label: "AI Builder", icon: Sparkles },
         { href: "/ats-checker", label: "ATS Analyzer", icon: BarChart2 },
       ]
-    : [{ href: "/resumes/builder", label: "AI Builder", icon: Sparkles }];
+    : [
+        { href: "#features", label: "Features" },
+        { href: "/ats-checker", label: "ATS Engine" },
+        { href: "#pricing", label: "Pricing" },
+        { href: "#docs", label: "Docs" },
+      ];
 
   const handleLogoutClick = async () => {
     setDropdownOpen(false);
@@ -48,95 +52,90 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#030C0A]/85 border-b border-[#0C4137]/40 no-print">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+    <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#0B0E14]/90 border-b border-[#1E293B] no-print">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0C4137] to-[#06D6A0] p-0.5 shadow-lg group-hover:shadow-[0_0_20px_rgba(6,214,160,0.4)] transition-all">
-            <div className="w-full h-full bg-[#030C0A] rounded-[10px] flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-[#06D6A0] group-hover:scale-110 transition-transform" />
+          <div className="w-9 h-9 rounded-xl bg-[#10B981] p-0.5 shadow-[0_0_15px_rgba(16,185,129,0.3)] group-hover:shadow-[0_0_25px_rgba(16,185,129,0.5)] transition-all">
+            <div className="w-full h-full bg-[#0B0E14] rounded-[10px] flex items-center justify-center">
+              <Sparkles className="w-4 h-4 text-[#10B981] group-hover:scale-110 transition-transform" />
             </div>
           </div>
           <div className="flex flex-col">
-            <span className="text-lg font-bold tracking-tight text-[#E6FBF6] group-hover:text-white">
-              Type<span className="text-[#06D6A0] glow-text-emerald">Cast</span>
-            </span>
-            <span className="text-[9px] tracking-widest text-[#06D6A0]/80 uppercase font-mono font-semibold">
-              AI Engineering Platform
+            <span className="text-xl font-extrabold tracking-tight text-white group-hover:text-[#10B981] transition-colors">
+              Type<span className="text-[#10B981]">Cast</span>
             </span>
           </div>
         </Link>
 
-        {/* Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 bg-[#061814]/80 p-1.5 rounded-full border border-[#0C4137]/60">
+        {/* Center Pill Navigation Container - Exact Image Match */}
+        <nav className="hidden md:flex items-center gap-1.5 bg-[#161F2E]/90 p-1.5 rounded-full border border-[#1E293B] shadow-inner">
           {navLinks.map((link) => {
-            const Icon = link.icon;
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold font-sans transition-all ${
                   isActive
-                    ? "bg-[#0C4137] text-[#06D6A0] shadow-sm border border-[#06D6A0]/30"
-                    : "text-[#E6FBF6]/70 hover:text-[#E6FBF6] hover:bg-[#0C4137]/30"
+                    ? "bg-[#10B981] text-[#0B0E14] shadow-sm font-bold"
+                    : "text-[#94A3B8] hover:text-white hover:bg-[#1E293B]/60"
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-[#06D6A0]" : "text-[#E6FBF6]/60"}`} />
                 {link.label}
               </Link>
             );
           })}
         </nav>
 
-        {/* Auth User Session Menu */}
+        {/* Right Actions */}
         <div className="flex items-center gap-3">
           {loading ? (
             <div className="w-8 h-8 flex items-center justify-center">
-              <Loader2 className="w-4 h-4 text-[#06D6A0] animate-spin" />
+              <Loader2 className="w-4 h-4 text-[#10B981] animate-spin" />
             </div>
           ) : isAuthenticated && user ? (
             <div className="relative">
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#061814] border border-[#0C4137] hover:border-[#06D6A0]/40 transition-all cursor-pointer"
+                className="flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-[#161F2E] border border-[#1E293B] hover:border-[#10B981]/40 transition-all cursor-pointer"
               >
-                <div className="w-7 h-7 rounded-lg bg-[#0C4137] text-[#06D6A0] flex items-center justify-center font-bold text-xs border border-[#06D6A0]/30">
+                <div className="w-7 h-7 rounded-lg bg-[#064E3B] text-[#10B981] flex items-center justify-center font-bold text-xs border border-[#10B981]/30">
                   {getInitials(user.name)}
                 </div>
-                <span className="text-xs font-semibold text-[#E6FBF6] hidden sm:inline">
+                <span className="text-xs font-semibold text-[#E2E8F0] hidden sm:inline">
                   {user.name}
                 </span>
-                <ChevronDown className="w-3.5 h-3.5 text-[#E6FBF6]/60" />
+                <ChevronDown className="w-3.5 h-3.5 text-[#94A3B8]" />
               </button>
 
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-56 glass-card rounded-2xl border border-[#0C4137] shadow-2xl py-2 z-50 animate-in fade-in">
-                  <div className="px-4 py-2 border-b border-[#0C4137]/60">
-                    <p className="text-xs font-bold text-[#E6FBF6] truncate">{user.name}</p>
-                    <p className="text-[11px] text-[#E6FBF6]/60 truncate font-mono">{user.email}</p>
+                <div className="absolute right-0 mt-2 w-56 bg-[#161F2E] rounded-2xl border border-[#1E293B] shadow-2xl py-2 z-50 animate-in fade-in">
+                  <div className="px-4 py-2 border-b border-[#1E293B]">
+                    <p className="text-xs font-bold text-white truncate">{user.name}</p>
+                    <p className="text-[11px] text-[#94A3B8] truncate font-mono">{user.email}</p>
                   </div>
 
                   <Link
                     href="/dashboard"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2.5 px-4 py-2 text-xs text-[#E6FBF6] hover:bg-[#0C4137]/50 hover:text-[#06D6A0] transition-colors"
+                    className="flex items-center gap-2.5 px-4 py-2 text-xs text-[#E2E8F0] hover:bg-[#1E293B] hover:text-[#10B981] transition-colors"
                   >
-                    <LayoutDashboard className="w-3.5 h-3.5 text-[#06D6A0]" />
+                    <LayoutDashboard className="w-3.5 h-3.5 text-[#10B981]" />
                     <span>Dashboard</span>
                   </Link>
 
                   <Link
                     href="/resumes/builder"
                     onClick={() => setDropdownOpen(false)}
-                    className="flex items-center gap-2.5 px-4 py-2 text-xs text-[#E6FBF6] hover:bg-[#0C4137]/50 hover:text-[#06D6A0] transition-colors"
+                    className="flex items-center gap-2.5 px-4 py-2 text-xs text-[#E2E8F0] hover:bg-[#1E293B] hover:text-[#10B981] transition-colors"
                   >
-                    <Sparkles className="w-3.5 h-3.5 text-[#06D6A0]" />
+                    <Sparkles className="w-3.5 h-3.5 text-[#10B981]" />
                     <span>Resume Studio</span>
                   </Link>
 
-                  <div className="pt-1 mt-1 border-t border-[#0C4137]/60">
+                  <div className="pt-1 mt-1 border-t border-[#1E293B]">
                     <button
                       onClick={handleLogoutClick}
                       className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-red-400 hover:bg-red-950/30 transition-colors cursor-pointer text-left"
@@ -152,18 +151,17 @@ export default function Navbar() {
             <>
               <Link
                 href="/auth/login"
-                className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-[#E6FBF6] hover:bg-[#0C4137]/40 border border-[#0C4137]/60 transition-all hover:border-[#06D6A0]/40"
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-[#E2E8F0] hover:text-white hover:bg-[#161F2E] transition-all"
               >
-                <LogIn className="w-3.5 h-3.5 text-[#06D6A0]" />
-                <span>Log In</span>
+                Login
               </Link>
 
               <Link
-                href="/auth/register"
-                className="flex items-center gap-2 px-4 py-1.5 rounded-xl text-xs font-bold text-[#030C0A] bg-[#06D6A0] hover:bg-[#05b88a] shadow-[0_0_15px_rgba(6,214,160,0.3)] transition-all hover:scale-105"
+                href="/resumes/builder"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-[#0B0E14] bg-[#10B981] hover:bg-[#059669] shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all hover:scale-105"
               >
-                <UserPlus className="w-3.5 h-3.5" />
-                <span>Get Started</span>
+                <span>Launch AI Resume Studio</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </>
           )}

@@ -1,55 +1,55 @@
 import Link from "next/link";
-import { Sparkles, Heart } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#030D0B] border-t border-[#0C4137]/40 text-[#E6FBF6]/70 mt-auto no-print">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+    <footer className="bg-[#0B0E14] border-t border-[#1E293B] text-[#94A3B8] mt-auto no-print font-sans">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           
           {/* Brand Col */}
-          <div className="space-y-4 md:col-span-1">
+          <div className="space-y-4 md:col-span-2">
             <Link href="/" className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0C4137] to-[#06D6A0] p-0.5">
-                <div className="w-full h-full bg-[#030D0B] rounded-[6px] flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-[#06D6A0]" />
+              <div className="w-7 h-7 rounded-lg bg-[#10B981] p-0.5 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                <div className="w-full h-full bg-[#0B0E14] rounded-[6px] flex items-center justify-center">
+                  <Sparkles className="w-3.5 h-3.5 text-[#10B981]" />
                 </div>
               </div>
-              <span className="text-lg font-bold text-[#E6FBF6]">
-                Type<span className="text-[#06D6A0]">Cast</span>
+              <span className="text-lg font-bold text-white">
+                Type<span className="text-[#10B981]">Cast</span>
               </span>
             </Link>
-            <p className="text-xs text-[#E6FBF6]/60 leading-relaxed">
+            <p className="text-xs text-[#94A3B8] leading-relaxed max-w-sm">
               Empowering engineers and developers to build high-impact, ATS-optimized resumes with Gemini 3.6 AI Engine precision.
             </p>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-sm font-semibold text-[#E6FBF6] mb-4 uppercase tracking-wider">Product</h4>
-            <ul className="space-y-2 text-sm">
+          {/* Product Links */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-mono font-bold text-white uppercase tracking-wider">PRODUCT</h4>
+            <ul className="space-y-2 text-xs">
               <li>
-                <Link href="/resumes/builder" className="hover:text-[#06D6A0] transition-colors">
+                <Link href="/resumes/builder" className="hover:text-[#10B981] transition-colors">
                   AI Resume Builder
                 </Link>
               </li>
               <li>
-                <Link href="/ats-checker" className="hover:text-[#06D6A0] transition-colors">
+                <Link href="/ats-checker" className="hover:text-[#10B981] transition-colors">
                   ATS Score Analyzer
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard" className="hover:text-[#06D6A0] transition-colors">
+                <Link href="/dashboard" className="hover:text-[#10B981] transition-colors">
                   Dashboard
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Features */}
-          <div>
-            <h4 className="text-sm font-semibold text-[#E6FBF6] mb-4 uppercase tracking-wider">AI Capabilities</h4>
-            <ul className="space-y-2 text-sm text-[#E6FBF6]/60">
+          {/* AI Capabilities */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-mono font-bold text-white uppercase tracking-wider">AI CAPABILITIES</h4>
+            <ul className="space-y-2 text-xs text-[#94A3B8]">
               <li>Smart Summary Generator</li>
               <li>Bullet Point Enhancer</li>
               <li>Skill Matrix Suggester</li>
@@ -59,8 +59,15 @@ export default function Footer() {
 
         </div>
 
-        <div className="pt-8 border-t border-[#0C4137]/40 flex flex-col sm:flex-row items-center justify-between text-xs text-[#E6FBF6]/50 gap-4">
-          <p>© {new Date().getFullYear()} TypeCast AI. All rights reserved.</p>
+        <div className="pt-8 border-t border-[#1E293B] flex flex-col sm:flex-row items-center justify-between text-xs text-[#64748B] gap-4">
+          <p>© {new Date().getFullYear()} TypeCast AI. Engineered for performance.</p>
+          <div className="flex flex-wrap items-center gap-4 text-[11px]">
+            <span className="hover:text-[#94A3B8] cursor-pointer">Privacy Policy</span>
+            <span className="hover:text-[#94A3B8] cursor-pointer">Terms of Service</span>
+            <span className="hover:text-[#94A3B8] cursor-pointer">Changelog</span>
+            <span className="hover:text-[#94A3B8] cursor-pointer">Status</span>
+            <span className="hover:text-[#94A3B8] cursor-pointer">Security</span>
+          </div>
         </div>
       </div>
     </footer>
