@@ -197,46 +197,6 @@ export default function LandingPage() {
 
         </div>
       </section>
-
-      {/* Interactive Quick ATS Test Widget */}
-      <section className="py-20 max-w-4xl mx-auto px-4">
-        <div className="glass-card p-8 rounded-3xl border border-[#0C4137] space-y-5">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#061814] border border-[#06D6A0]/30 flex items-center justify-center text-[#06D6A0]">
-              <BarChart2 className="w-4 h-4" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-[#E6FBF6]">Live ATS Scoring Engine</h3>
-              <p className="text-xs text-[#E6FBF6]/60">Paste a summary snippet below to evaluate ATS keyword match probability</p>
-            </div>
-          </div>
-
-          <textarea
-            rows={3}
-            value={sampleText}
-            onChange={(e) => setSampleText(e.target.value)}
-            className="w-full p-3.5 rounded-xl bg-[#030C0A] border border-[#0C4137] text-xs font-mono text-[#E6FBF6] focus:outline-none focus:border-[#06D6A0]"
-          />
-
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <button
-              onClick={handleQuickAtsCheck}
-              disabled={analyzing}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-xl font-semibold text-[#030C0A] bg-[#06D6A0] hover:bg-[#05b88a] transition-all text-xs cursor-pointer"
-            >
-              {analyzing ? "Evaluating..." : "Run ATS Evaluation"}
-            </button>
-
-            {atsScore !== null && (
-              <div className="flex items-center gap-2 bg-[#061814] px-4 py-2 rounded-xl border border-[#06D6A0]/30 text-xs font-mono">
-                <span className="text-[#E6FBF6]/70">ATS Score:</span>
-                <span className="font-bold text-[#06D6A0]">{atsScore}%</span>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
     </div>
   );
 }
