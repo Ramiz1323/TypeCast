@@ -49,15 +49,9 @@ function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      fill="currentColor"
     >
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-      <rect width="4" height="12" x="2" y="9" />
-      <circle cx="4" cy="4" r="2" />
+      <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.78a1.63 1.63 0 1 0 0 3.26 1.63 1.63 0 0 0 0-3.26z" />
     </svg>
   );
 }
@@ -171,12 +165,22 @@ function ResumeBuilderContent() {
       const data: any = await getResumeByIdApi(id);
       if (data) {
         if (data.title) setTitle(data.title);
-        if (data.summary) setSummary(data.summary);
-        if (data.personalInfo) setPersonalInfo(data.personalInfo);
-        if (Array.isArray(data.skills) && data.skills.length > 0) setSkills(data.skills);
-        if (Array.isArray(data.workExperience) && data.workExperience.length > 0) setWorkExperience(data.workExperience);
-        if (Array.isArray(data.projects) && data.projects.length > 0) setProjects(data.projects);
-        if (Array.isArray(data.education) && data.education.length > 0) setEducation(data.education);
+        if (data.summary !== undefined) setSummary(data.summary || "");
+        if (data.personalInfo) {
+          setPersonalInfo({
+            fullname: data.personalInfo.fullname || "",
+            email: data.personalInfo.email || "",
+            mobile: data.personalInfo.mobile || "",
+            location: data.personalInfo.location || "",
+            github: data.personalInfo.github || "",
+            linkedIn: data.personalInfo.linkedIn || "",
+            portfolio: data.personalInfo.portfolio || "",
+          });
+        }
+        if (Array.isArray(data.skills)) setSkills(data.skills);
+        if (Array.isArray(data.workExperience)) setWorkExperience(data.workExperience);
+        if (Array.isArray(data.projects)) setProjects(data.projects);
+        if (Array.isArray(data.education)) setEducation(data.education);
       }
     } catch (err) {
       console.error("Failed to load existing resume:", err);
@@ -432,7 +436,7 @@ function ResumeBuilderContent() {
                   <label className="block text-[11px] text-[#E6FBF6]/70 mb-1 font-medium">Full Name</label>
                   <input
                     type="text"
-                    value={personalInfo.fullname}
+                    value={personalInfo.fullname || ""}
                     onChange={(e) => setPersonalInfo({ ...personalInfo, fullname: e.target.value })}
                     className="w-full p-2.5 rounded-xl bg-[#030D0B] border border-[#0C4137] text-xs text-[#E6FBF6] focus:border-[#06D6A0] focus:outline-none"
                   />
@@ -442,7 +446,7 @@ function ResumeBuilderContent() {
                   <label className="block text-[11px] text-[#E6FBF6]/70 mb-1 font-medium">Email Address</label>
                   <input
                     type="email"
-                    value={personalInfo.email}
+                    value={personalInfo.email || ""}
                     onChange={(e) => setPersonalInfo({ ...personalInfo, email: e.target.value })}
                     className="w-full p-2.5 rounded-xl bg-[#030D0B] border border-[#0C4137] text-xs text-[#E6FBF6] focus:border-[#06D6A0] focus:outline-none"
                   />
@@ -452,7 +456,7 @@ function ResumeBuilderContent() {
                   <label className="block text-[11px] text-[#E6FBF6]/70 mb-1 font-medium">Phone Number</label>
                   <input
                     type="text"
-                    value={personalInfo.mobile}
+                    value={personalInfo.mobile || ""}
                     onChange={(e) => setPersonalInfo({ ...personalInfo, mobile: e.target.value })}
                     className="w-full p-2.5 rounded-xl bg-[#030D0B] border border-[#0C4137] text-xs text-[#E6FBF6] focus:border-[#06D6A0] focus:outline-none"
                   />
@@ -462,7 +466,7 @@ function ResumeBuilderContent() {
                   <label className="block text-[11px] text-[#E6FBF6]/70 mb-1 font-medium">LinkedIn Username / URL</label>
                   <input
                     type="text"
-                    value={personalInfo.linkedIn}
+                    value={personalInfo.linkedIn || ""}
                     onChange={(e) => setPersonalInfo({ ...personalInfo, linkedIn: e.target.value })}
                     className="w-full p-2.5 rounded-xl bg-[#030D0B] border border-[#0C4137] text-xs text-[#E6FBF6] focus:border-[#06D6A0] focus:outline-none"
                   />
@@ -472,7 +476,7 @@ function ResumeBuilderContent() {
                   <label className="block text-[11px] text-[#E6FBF6]/70 mb-1 font-medium">Portfolio / Website</label>
                   <input
                     type="text"
-                    value={personalInfo.portfolio}
+                    value={personalInfo.portfolio || ""}
                     onChange={(e) => setPersonalInfo({ ...personalInfo, portfolio: e.target.value })}
                     className="w-full p-2.5 rounded-xl bg-[#030D0B] border border-[#0C4137] text-xs text-[#E6FBF6] focus:border-[#06D6A0] focus:outline-none"
                   />
