@@ -9,7 +9,17 @@ export async function GET(
 ) {
   try {
     await connectDB();
-    const userId = await getCurrentUser();
+    
+    let userId: string;
+    try {
+      userId = await getCurrentUser();
+    } catch {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized access. Token not found." },
+        { status: 401 }
+      );
+    }
+
     const { resumeId } = await params;
     const resume = await ResumeModel.findOne({ _id: resumeId, user_id: userId });
 

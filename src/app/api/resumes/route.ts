@@ -6,7 +6,17 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     await connectDB();
-    const userId = await getCurrentUser();
+    
+    let userId: string;
+    try {
+      userId = await getCurrentUser();
+    } catch {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized access. Token not found." },
+        { status: 401 }
+      );
+    }
+
     const resumes = await ResumeModel.find({ user_id: userId }).sort({ updatedAt: -1 });
 
     return NextResponse.json(resumes, { status: 200 });

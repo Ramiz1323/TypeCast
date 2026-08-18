@@ -32,10 +32,10 @@ export async function POST(req: NextRequest) {
         let token = generateToken({ userId: isExisted._id.toString() });
         let cookiesStore = await cookies();
         cookiesStore.set("token", token, {
-            httpOnly:true,
-            secure:true,
-            maxAge: 60 * 60,
-            path:"/"
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 60 * 60 * 24,
+            path: "/"
         });
 
         return NextResponse.json<ApiResponse<string>>({

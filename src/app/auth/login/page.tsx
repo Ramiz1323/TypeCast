@@ -36,7 +36,7 @@ export default function LoginPage() {
       }, 1000);
     } catch (err: any) {
       setError(
-        err?.response?.data?.message || "Login failed. Please check your credentials."
+        err?.response?.data?.message || "Login failed. Please verify your email and password."
       );
     } finally {
       setLoading(false);
@@ -44,44 +44,53 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="auth-page-wrapper">
+    <div className="min-h-[calc(100vh-80px)] flex items-center justify-center p-4 relative overflow-hidden bg-gradient-obsidian">
       
-      {/* Decorative ambient background glow */}
-      <div className="auth-glow-blob" />
+      {/* Background Decorative Glow Blobs */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#06D6A0]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-80 h-80 bg-[#0C4137]/30 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Login Glassmorphism Card */}
-      <div className="glass-card auth-card">
+      {/* Login Card */}
+      <div className="w-full max-w-md glass-card p-8 rounded-3xl border border-[#0C4137] shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative z-10">
         
-        {/* Header */}
-        <div className="auth-header">
-          <div className="auth-logo-badge">
-            <Sparkles className="w-6 h-6 text-emerald" />
+        {/* Header Icon & Title */}
+        <div className="text-center mb-8">
+          <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[#0C4137] to-[#06D6A0] p-0.5 shadow-lg shadow-[#06D6A0]/20 flex items-center justify-center">
+            <div className="w-full h-full bg-[#030D0B] rounded-[14px] flex items-center justify-center">
+              <Sparkles className="w-7 h-7 text-[#06D6A0]" />
+            </div>
           </div>
-          <h1 className="auth-title">Welcome Back</h1>
-          <p className="auth-subtitle">Sign in to continue building high-impact resumes</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#E6FBF6] tracking-tight">
+            Welcome Back
+          </h1>
+          <p className="text-sm text-[#E6FBF6]/60 mt-1">
+            Sign in to continue building high-impact resumes
+          </p>
         </div>
 
-        {/* Alerts */}
+        {/* Feedback Banners */}
         {error && (
-          <div className="alert alert-error">
-            <AlertCircle className="w-5 h-5 shrink-0" />
+          <div className="mb-6 p-4 rounded-xl bg-red-950/50 border border-red-500/30 text-red-200 text-sm flex items-start gap-3 animate-in fade-in">
+            <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
 
         {success && (
-          <div className="alert alert-success">
-            <CheckCircle2 className="w-5 h-5 shrink-0" />
+          <div className="mb-6 p-4 rounded-xl bg-[#0C4137]/60 border border-[#06D6A0]/50 text-[#06D6A0] text-sm flex items-start gap-3 animate-in fade-in">
+            <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" />
             <span>{success}</span>
           </div>
         )}
 
         {/* Form */}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label">Email Address</label>
-            <div className="input-wrapper">
-              <Mail className="w-5 h-5 input-icon" />
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-xs font-semibold text-[#E6FBF6]/80 uppercase tracking-wider mb-2">
+              Email Address
+            </label>
+            <div className="relative">
+              <Mail className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#06D6A0]/60" />
               <input
                 type="email"
                 name="email"
@@ -89,15 +98,17 @@ export default function LoginPage() {
                 value={form.email}
                 onChange={handleChange}
                 disabled={loading}
-                className="form-input"
+                className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-[#061814] border border-[#0C4137] text-[#E6FBF6] placeholder-[#E6FBF6]/30 focus:outline-none focus:border-[#06D6A0] focus:ring-1 focus:ring-[#06D6A0] transition-all disabled:opacity-50"
               />
             </div>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Password</label>
-            <div className="input-wrapper">
-              <Lock className="w-5 h-5 input-icon" />
+          <div>
+            <label className="block text-xs font-semibold text-[#E6FBF6]/80 uppercase tracking-wider mb-2">
+              Password
+            </label>
+            <div className="relative">
+              <Lock className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#06D6A0]/60" />
               <input
                 type="password"
                 name="password"
@@ -105,12 +116,16 @@ export default function LoginPage() {
                 value={form.password}
                 onChange={handleChange}
                 disabled={loading}
-                className="form-input"
+                className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-[#061814] border border-[#0C4137] text-[#E6FBF6] placeholder-[#E6FBF6]/30 focus:outline-none focus:border-[#06D6A0] focus:ring-1 focus:ring-[#06D6A0] transition-all disabled:opacity-50"
               />
             </div>
           </div>
 
-          <button type="submit" disabled={loading} className="btn btn-emerald auth-submit-btn">
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-4 px-6 rounded-xl font-semibold text-[#030D0B] bg-[#06D6A0] hover:bg-[#05b88a] shadow-[0_0_25px_rgba(6,214,160,0.35)] hover:shadow-[0_0_35px_rgba(6,214,160,0.5)] transition-all flex items-center justify-center gap-2 group disabled:opacity-60 cursor-pointer"
+          >
             {loading ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -119,17 +134,20 @@ export default function LoginPage() {
             ) : (
               <>
                 <span>Sign In</span>
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </>
             )}
           </button>
         </form>
 
-        {/* Footer link */}
-        <div className="auth-footer-link">
-          <p>
+        {/* Footer Link */}
+        <div className="mt-8 pt-6 border-t border-[#0C4137]/40 text-center">
+          <p className="text-sm text-[#E6FBF6]/60">
             Don't have an account yet?{" "}
-            <Link href="/auth/register" className="text-emerald font-bold">
+            <Link
+              href="/auth/register"
+              className="text-[#06D6A0] font-semibold hover:underline inline-flex items-center gap-1"
+            >
               Create Account
             </Link>
           </p>
@@ -139,3 +157,4 @@ export default function LoginPage() {
     </div>
   );
 }
+
