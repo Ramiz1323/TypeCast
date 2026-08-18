@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { registerApi, loginApi } from "@/apis/auth.api";
@@ -9,11 +9,26 @@ import { Sparkles, User, Mail, Lock, ArrowRight, Loader2, AlertCircle, CheckCirc
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { checkAuth } = useAuth();
+  const { isAuthenticated, loading: authLoading, checkAuth } = useAuth();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      router.replace("/dashboard");
+    }
+  }, [isAuthenticated, authLoading, router]);
+
+  if (authLoading || isAuthenticated) {
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center space-y-4">
+        <Loader2 className="w-8 h-8 text-[#06D6A0] animate-spin" />
+        <p className="text-xs font-mono text-[#E6FBF6]/60">Redirecting to dashboard...</p>
+      </div>
+    );
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
