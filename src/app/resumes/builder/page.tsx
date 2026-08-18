@@ -271,8 +271,7 @@ function ResumeBuilderContent() {
     setSaving(true);
     setSaveSuccess(false);
     try {
-      const payload: IResume = {
-        user_id: "user" as any,
+      const payload: any = {
         title: title || "Developer Resume",
         summary,
         personalInfo,
@@ -300,8 +299,7 @@ function ResumeBuilderContent() {
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (err) {
       console.error("Save error:", err);
-      setSaveSuccess(true);
-      setTimeout(() => setSaveSuccess(false), 3000);
+      alert("Failed to save resume. Please check server logs.");
     } finally {
       setSaving(false);
     }

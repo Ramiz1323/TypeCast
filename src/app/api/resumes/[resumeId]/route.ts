@@ -60,9 +60,16 @@ export async function PUT(
     const { resumeId } = await params;
     const body = await req.json();
 
+    // Remove immutable and system fields to prevent Mongoose CastErrors
+    const updateData = { ...body };
+    delete updateData._id;
+    delete updateData.user_id;
+    delete updateData.createdAt;
+    delete updateData.updatedAt;
+
     const updatedResume = await ResumeModel.findOneAndUpdate(
       { _id: resumeId, user_id: userId },
-      { $set: body },
+      { $set: updateData },
       { new: true }
     );
 
