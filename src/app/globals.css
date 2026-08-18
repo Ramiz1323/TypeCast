@@ -324,20 +324,77 @@ button, input, textarea, select {
   border: 1px solid rgba(6, 214, 160, 0.3);
 }
 
-/* Print CSS */
-@media print {
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
-  }
-  .no-print { display: none !important; }
-  .resume-print-area {
-    padding: 0 !important;
-    box-shadow: none !important;
-    border: none !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    background: #ffffff !important;
-    color: #111111 !important;
-  }
+/* Logo & Footer CSS Rules */
+.logo-icon-wrapper {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--brunswick), var(--emerald));
+  padding: 2px;
 }
+
+.brand-subtitle {
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  color: rgba(6, 214, 160, 0.8);
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.footer-container {
+  background: var(--obsidian);
+  border-top: 1px solid var(--border-emerald);
+  color: var(--polar-muted);
+  margin-top: auto;
+}
+
+.footer-heading {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--polar);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.footer-list a:hover {
+  color: var(--emerald);
+}
+
+.palette-card {
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  background: var(--surface-dark);
+  border: 1px solid var(--border-emerald);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.swatch {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+}
+.swatch-brunswick { background: var(--brunswick); }
+.swatch-emerald { background: var(--emerald); }
+.swatch-polar { background: var(--polar); }
+
+.footer-bottom {
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-emerald);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--polar-subtle);
+}
+
