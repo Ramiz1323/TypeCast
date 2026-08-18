@@ -122,7 +122,6 @@ button, input, textarea, select {
 .text-emerald { color: var(--emerald); }
 .text-polar { color: var(--polar); }
 .text-muted { color: var(--polar-muted); }
-.text-[#06D6A0] { color: var(--emerald); }
 
 .glow-text-emerald {
   text-shadow: 0 0 12px var(--emerald-glow);
