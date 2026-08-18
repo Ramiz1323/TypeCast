@@ -13,7 +13,6 @@ import {
   ChevronDown,
   Loader2,
   LayoutDashboard,
-  ArrowRight,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -24,15 +23,12 @@ export default function Navbar() {
 
   const navLinks = isAuthenticated
     ? [
-        { href: "/dashboard", label: "Dashboard", icon: FileText },
-        { href: "/resumes/builder", label: "AI Builder", icon: Sparkles },
-        { href: "/ats-checker", label: "ATS Analyzer", icon: BarChart2 },
+        { href: "/dashboard", label: "Dashboard" },
+        { href: "/resumes/builder", label: "AI Resume Studio" },
+        { href: "/ats-checker", label: "ATS Analyzer" },
       ]
     : [
-        { href: "#features", label: "Features" },
-        { href: "/ats-checker", label: "ATS Engine" },
-        { href: "#pricing", label: "Pricing" },
-        { href: "#docs", label: "Docs" },
+        { href: "/resumes/builder", label: "AI Resume Studio" },
       ];
 
   const handleLogoutClick = async () => {
@@ -69,7 +65,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Center Pill Navigation Container - Exact Image Match */}
+        {/* Center Navigation Container */}
         <nav className="hidden md:flex items-center gap-1.5 bg-[#161F2E]/90 p-1.5 rounded-full border border-[#1E293B] shadow-inner">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
@@ -77,7 +73,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold font-sans transition-all ${
+                className={`px-5 py-1.5 rounded-full text-xs font-semibold font-sans transition-all ${
                   isActive
                     ? "bg-[#10B981] text-[#0B0E14] shadow-sm font-bold"
                     : "text-[#94A3B8] hover:text-white hover:bg-[#1E293B]/60"
@@ -153,15 +149,14 @@ export default function Navbar() {
                 href="/auth/login"
                 className="px-4 py-2 rounded-xl text-xs font-semibold text-[#E2E8F0] hover:text-white hover:bg-[#161F2E] transition-all"
               >
-                Login
+                Log In
               </Link>
 
               <Link
-                href="/resumes/builder"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-[#0B0E14] bg-[#10B981] hover:bg-[#059669] shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all hover:scale-105"
+                href="/auth/register"
+                className="px-4 py-2 rounded-xl text-xs font-bold text-[#0B0E14] bg-[#10B981] hover:bg-[#059669] shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all hover:scale-105"
               >
-                <span>Launch AI Resume Studio</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                Get Started
               </Link>
             </>
           )}
