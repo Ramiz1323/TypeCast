@@ -271,6 +271,142 @@ button, input, textarea, select {
   color: var(--emerald);
 }
 
+/* Landing Page CSS Rules */
+.landing-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: var(--obsidian);
+  min-height: 100vh;
+}
+
+.landing-glow-top {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(6, 214, 160, 0.15) 0%, rgba(12, 65, 55, 0.2) 50%, transparent 70%);
+  filter: blur(64px);
+  pointer-events: none;
+}
+
+.hero-section {
+  padding-top: 5rem;
+  padding-bottom: 6rem;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 840px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--polar);
+  margin-bottom: 1.5rem;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--polar-muted);
+  max-width: 640px;
+  margin: 0 auto 2rem auto;
+  line-height: 1.6;
+}
+
+.hero-ctas {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.hero-pills {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  font-size: 0.75rem;
+  color: var(--polar-subtle);
+}
+
+.mock-preview-container {
+  margin-top: 4rem;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mock-preview-card {
+  padding: 1.5rem;
+  border-radius: var(--radius-xl);
+  text-align: left;
+}
+
+.mock-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-emerald);
+  margin-bottom: 1.5rem;
+}
+
+.dot { width: 12px; height: 12px; border-radius: 9999px; }
+.dot-red { background: #ef4444; }
+.dot-yellow { background: #f59e0b; }
+.dot-green { background: var(--emerald); }
+
+.mock-filename {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--polar-subtle);
+  margin-left: 0.5rem;
+}
+
+.mock-score-pill {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  background: var(--surface-dark);
+  border: 1px solid rgba(6, 214, 160, 0.4);
+  color: var(--emerald);
+  font-family: monospace;
+  font-size: 0.75rem;
+}
+
+.mock-name { font-size: 1.25rem; font-weight: 700; color: var(--polar); }
+.mock-role { font-size: 0.75rem; color: var(--emerald); font-family: monospace; }
+.mock-section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--polar-muted); margin-bottom: 0.5rem; }
+.mock-skill-chip { padding: 0.15rem 0.5rem; border-radius: 4px; background: rgba(12, 65, 55, 0.6); font-size: 0.6875rem; color: var(--polar); border: 1px solid rgba(6, 214, 160, 0.2); }
+.mock-text-box { font-size: 0.75rem; color: var(--polar-muted); background: var(--surface-dark); padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--brunswick); }
+.mock-project-box { padding: 0.75rem; border-radius: var(--radius-md); background: rgba(6, 24, 20, 0.6); border: 1px solid var(--border-emerald); }
+
+.metrics-banner {
+  padding: 3rem 0;
+  background: rgba(6, 24, 20, 0.6);
+  border-top: 1px solid var(--border-emerald);
+  border-bottom: 1px solid var(--border-emerald);
+}
+
+.metric-num { font-size: 2.25rem; font-weight: 800; }
+.metric-label { font-size: 0.875rem; color: var(--polar-muted); margin-top: 0.25rem; }
+
+.section-title { font-size: 2rem; font-weight: 700; color: var(--polar); }
+.section-subtitle { font-size: 1rem; color: var(--polar-muted); margin-top: 0.5rem; }
+
+.feature-card { padding: 2rem; border-radius: var(--radius-xl); text-align: left; }
+.feature-icon { width: 3rem; height: 3rem; border-radius: var(--radius-md); background: var(--surface-dark); border: 1px solid rgba(6, 214, 160, 0.4); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+.feature-card-title { font-size: 1.25rem; font-weight: 700; color: var(--polar); margin-bottom: 0.5rem; }
+.feature-card-desc { font-size: 0.875rem; color: var(--polar-muted); line-height: 1.6; }
+
+.quick-ats-section { padding: 5rem 0; background: rgba(6, 24, 20, 0.4); border-top: 1px solid var(--border-emerald); }
+.ats-teaser-card { padding: 2rem; border-radius: var(--radius-xl); display: flex; flex-direction: column; gap: 1.5rem; }
+.ats-demo-score-badge { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 1rem; border-radius: var(--radius-md); background: rgba(12, 65, 55, 0.6); border: 1px solid rgba(6, 214, 160, 0.4); font-size: 0.875rem; }
+
 /* Auth Page CSS Rules */
 .auth-page-wrapper {
   min-height: calc(100vh - 80px);
