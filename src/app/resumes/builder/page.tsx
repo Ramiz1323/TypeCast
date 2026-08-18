@@ -1038,7 +1038,7 @@ function ResumeBuilderContent() {
             {analyzingAts ? (
               <div className="py-12 text-center space-y-3">
                 <Loader2 className="w-8 h-8 text-[#06D6A0] animate-spin mx-auto" />
-                <p className="text-sm text-[#E6FBF6]/70">Analyzing resume content with Gemini AI...</p>
+                <p className="text-sm text-[#E6FBF6]/70">Analyzing resume content with Gemini 3.6 AI Engine...</p>
               </div>
             ) : (
               <div className="space-y-6">

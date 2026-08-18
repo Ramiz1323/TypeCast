@@ -158,7 +158,7 @@ export default function DashboardPage() {
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <div className="text-xl font-bold text-[#E6FBF6]">Gemini 2.0</div>
+              <div className="text-xl font-bold text-[#E6FBF6]">Gemini 3.6 Engine</div>
               <div className="text-xs text-[#E6FBF6]/60 font-medium">Active AI Engine</div>
             </div>
           </div>
@@ -190,7 +190,7 @@ export default function DashboardPage() {
               <div className="space-y-1.5">
                 <h3 className="text-lg font-bold text-[#E6FBF6]">No resumes created yet</h3>
                 <p className="text-xs text-[#E6FBF6]/60 max-w-md mx-auto">
-                  Build your first ATS-optimized developer resume with Gemini AI assistance.
+                  Build your first ATS-optimized developer resume with Gemini 3.6 AI Engine assistance.
                 </p>
               </div>
               <Link

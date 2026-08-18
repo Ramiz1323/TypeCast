@@ -61,7 +61,7 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-base sm:text-lg text-[#E6FBF6]/70 leading-relaxed font-normal max-w-2xl mx-auto">
-            TypeCast combines Gemini AI precision with developer-first ATS templates to generate high-impact bullet points, technical skills matrices, and project breakdowns.
+            TypeCast combines Gemini 3.6 AI Engine precision with developer-first ATS templates to generate high-impact bullet points, technical skills matrices, and project breakdowns.
           </p>
 
           {/* Primary Action Buttons */}
@@ -95,7 +95,7 @@ export default function LandingPage() {
             </div>
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-[#06D6A0]" />
-              <span>Gemini AI 2.0 Engine</span>
+              <span>Gemini 3.6 AI Engine</span>
             </div>
           </div>
         </div>

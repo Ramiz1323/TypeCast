@@ -13,7 +13,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: "TypeCast — Production AI Resume Engineering Platform",
-  description: "Craft ATS-optimized, high-impact engineering resumes powered by Gemini AI and precision design systems.",
+  description: "Craft ATS-optimized, high-impact engineering resumes powered by Gemini 3.6 AI Engine and precision design systems.",
 };
 
 export default function RootLayout({

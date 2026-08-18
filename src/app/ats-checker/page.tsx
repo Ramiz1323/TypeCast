@@ -148,7 +148,7 @@ export default function AtsCheckerPage() {
             {loading ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                <span>Analyzing ATS Keywords with Gemini AI...</span>
+                <span>Analyzing ATS Keywords with Gemini 3.6 AI Engine...</span>
               </>
             ) : (
               <>

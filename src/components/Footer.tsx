@@ -20,7 +20,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-xs text-[#E6FBF6]/60 leading-relaxed">
-              Empowering engineers and developers to build high-impact, ATS-optimized resumes with Gemini AI precision.
+              Empowering engineers and developers to build high-impact, ATS-optimized resumes with Gemini 3.6 AI Engine precision.
             </p>
           </div>
 
