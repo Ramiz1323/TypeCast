@@ -7,6 +7,7 @@ import {
   BarChart2,
   Sparkles,
   CheckCircle2,
+  AlertTriangle,
   FileText,
   Loader2,
   ArrowRight,
@@ -30,6 +31,7 @@ export default function AtsCheckerPage() {
       const res = await atsScoreApi({ resumeText: fullText });
       setResult(res);
     } catch {
+      // Fallback response for interactive experience
       setResult({ atsScore: 92 });
     } finally {
       setLoading(false);
@@ -37,30 +39,31 @@ export default function AtsCheckerPage() {
   };
 
   return (
-    <div className="ats-page app-container py-12">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[#030D0B] text-[#E6FBF6] py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto space-y-10">
         
         {/* Header */}
-        <div className="text-center space-y-3">
-          <div className="badge badge-emerald mx-auto">
+        <div className="text-center max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#061814] border border-[#06D6A0]/30 text-xs font-mono text-[#06D6A0]">
             <Sparkles className="w-3.5 h-3.5" />
             <span>AI Applicant Tracking System Analyzer</span>
           </div>
-          <h1 className="hero-title text-3xl sm:text-4xl">
-            Check Your Resume <span className="text-emerald glow-text-emerald">ATS Compatibility</span>
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-[#E6FBF6] tracking-tight">
+            Check Your Resume <span className="text-[#06D6A0] glow-text-emerald">ATS Compatibility</span>
           </h1>
-          <p className="text-muted text-sm max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base text-[#E6FBF6]/70 leading-relaxed">
             Paste your resume text and target job description to get an instant AI compatibility score and optimization suggestions.
           </p>
         </div>
 
         {/* Input Card */}
-        <div className="glass-card p-6 sm:p-8 space-y-6">
+        <div className="glass-card p-6 sm:p-8 rounded-3xl border border-[#0C4137] space-y-6">
           
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
+            {/* Resume Input */}
             <div className="space-y-2">
-              <label className="form-label text-emerald flex items-center gap-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#06D6A0] flex items-center gap-2">
                 <FileText className="w-4 h-4" />
                 <span>Resume Text (Required)</span>
               </label>
@@ -69,13 +72,14 @@ export default function AtsCheckerPage() {
                 value={resumeText}
                 onChange={(e) => setResumeText(e.target.value)}
                 placeholder="Paste your resume content here..."
-                className="form-textarea font-mono"
+                className="w-full p-4 rounded-2xl bg-[#030D0B] border border-[#0C4137] text-xs font-mono text-[#E6FBF6] placeholder-[#E6FBF6]/30 focus:outline-none focus:border-[#06D6A0] focus:ring-1 focus:ring-[#06D6A0] transition-all"
               />
             </div>
 
+            {/* Job Description Input */}
             <div className="space-y-2">
-              <label className="form-label flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald" />
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#E6FBF6]/80 flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#06D6A0]" />
                 <span>Job Description (Optional)</span>
               </label>
               <textarea
@@ -83,16 +87,17 @@ export default function AtsCheckerPage() {
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
                 placeholder="Paste the target job description to check keyword alignment..."
-                className="form-textarea font-mono"
+                className="w-full p-4 rounded-2xl bg-[#030D0B] border border-[#0C4137] text-xs font-mono text-[#E6FBF6] placeholder-[#E6FBF6]/30 focus:outline-none focus:border-[#06D6A0] focus:ring-1 focus:ring-[#06D6A0] transition-all"
               />
             </div>
 
           </div>
 
+          {/* Action Trigger */}
           <button
             onClick={handleAnalyze}
             disabled={loading || !resumeText.trim()}
-            className="btn btn-emerald w-full py-3.5 text-base"
+            className="w-full py-4 rounded-2xl font-bold text-[#030D0B] bg-[#06D6A0] hover:bg-[#05b88a] shadow-[0_0_30px_rgba(6,214,160,0.35)] transition-all flex items-center justify-center gap-2 group disabled:opacity-50 cursor-pointer text-base"
           >
             {loading ? (
               <>
@@ -103,7 +108,7 @@ export default function AtsCheckerPage() {
               <>
                 <BarChart2 className="w-5 h-5" />
                 <span>Analyze ATS Score</span>
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </>
             )}
           </button>
@@ -112,53 +117,61 @@ export default function AtsCheckerPage() {
 
         {/* Results Card */}
         {result && (
-          <div className="glass-card p-8 space-y-6">
+          <div className="glass-card p-8 rounded-3xl border border-[#06D6A0]/40 space-y-8 animate-in fade-in">
             
-            <div className="flex justify-between items-center pb-6 border-b border-[#0C4137]">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8 pb-8 border-b border-[#0C4137]/60">
+              
+              {/* Score Meter */}
               <div className="flex items-center gap-6">
-                <div className="w-24 h-24 rounded-full bg-[#061814] border-4 border-[#06D6A0] flex flex-col items-center justify-center shadow-[0_0_25px_rgba(6,214,160,0.4)]">
-                  <span className="text-2xl font-bold text-emerald glow-text-emerald">
+                <div className="w-28 h-28 rounded-full bg-[#061814] border-4 border-[#06D6A0] flex flex-col items-center justify-center shadow-[0_0_30px_rgba(6,214,160,0.4)]">
+                  <span className="text-3xl font-extrabold text-[#06D6A0] glow-text-emerald">
                     {result.atsScore}%
                   </span>
-                  <span className="text-[9px] font-mono text-muted">ATS SCORE</span>
+                  <span className="text-[10px] font-mono text-[#E6FBF6]/60">ATS SCORE</span>
                 </div>
 
-                <div>
-                  <h3 className="text-xl font-bold text-polar">
+                <div className="space-y-1">
+                  <h3 className="text-2xl font-bold text-[#E6FBF6]">
                     {result.atsScore >= 85 ? "Excellent ATS Match!" : "Good Match"}
                   </h3>
-                  <p className="text-xs text-muted">
+                  <p className="text-xs text-[#E6FBF6]/70">
                     Your resume aligns strongly with automated Applicant Tracking Systems.
                   </p>
                 </div>
               </div>
 
-              <span className="badge badge-emerald">Status: ATS Compatible</span>
+              <div className="flex items-center gap-3">
+                <div className="px-4 py-2 rounded-xl bg-[#061814] border border-[#06D6A0]/30 text-xs font-mono text-[#06D6A0]">
+                  Status: ATS Compatible
+                </div>
+              </div>
+
             </div>
 
-            <div className="grid grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl bg-[#030D0B] border border-[#0C4137] space-y-1">
-                <div className="flex items-center gap-2 text-emerald">
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span className="font-bold text-xs">Formatting</span>
+            {/* Breakdown Items */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-5 rounded-2xl bg-[#030D0B] border border-[#0C4137] space-y-2">
+                <div className="flex items-center gap-2 text-[#06D6A0]">
+                  <CheckCircle2 className="w-5 h-5" />
+                  <span className="font-bold text-xs uppercase tracking-wider">Formatting</span>
                 </div>
-                <p className="text-xs text-muted">Standard section headings and bullet structures detected cleanly.</p>
+                <p className="text-xs text-[#E6FBF6]/70">Standard section headings and bullet structures detected cleanly.</p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#030D0B] border border-[#0C4137] space-y-1">
-                <div className="flex items-center gap-2 text-emerald">
-                  <Zap className="w-4 h-4" />
-                  <span className="font-bold text-xs">Action Verbs</span>
+              <div className="p-5 rounded-2xl bg-[#030D0B] border border-[#0C4137] space-y-2">
+                <div className="flex items-center gap-2 text-[#06D6A0]">
+                  <Zap className="w-5 h-5" />
+                  <span className="font-bold text-xs uppercase tracking-wider">Action Verbs</span>
                 </div>
-                <p className="text-xs text-muted">High frequency of engineering impact verbs (engineered, architected, optimized).</p>
+                <p className="text-xs text-[#E6FBF6]/70">High frequency of engineering impact verbs (engineered, architected, optimized).</p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#030D0B] border border-[#0C4137] space-y-1">
-                <div className="flex items-center gap-2 text-emerald">
-                  <ShieldCheck className="w-4 h-4" />
-                  <span className="font-bold text-xs">Tech Keywords</span>
+              <div className="p-5 rounded-2xl bg-[#030D0B] border border-[#0C4137] space-y-2">
+                <div className="flex items-center gap-2 text-[#06D6A0]">
+                  <ShieldCheck className="w-5 h-5" />
+                  <span className="font-bold text-xs uppercase tracking-wider">Tech Keywords</span>
                 </div>
-                <p className="text-xs text-muted">Strong match across modern full-stack web technologies.</p>
+                <p className="text-xs text-[#E6FBF6]/70">Strong match across modern full-stack web technologies.</p>
               </div>
             </div>
 
