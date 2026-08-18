@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   createResumeApi,
   getResumeByIdApi,
+  updateResumeApi,
 } from "@/apis/resume.api";
 import {
   generateSummaryApi,
@@ -38,6 +39,7 @@ import {
   Phone,
   Globe,
 } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -60,11 +62,14 @@ function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-import { useAuth } from "@/context/AuthContext";
-
-export default function ResumeBuilderPage() {
+function ResumeBuilderContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const queryId = searchParams.get("id");
   const { user } = useAuth();
+
+  const [resumeId, setResumeId] = useState<string | null>(queryId);
+  const [loadingResume, setLoadingResume] = useState<boolean>(!!queryId);
 
   // Resume Form State
   const [title, setTitle] = useState("Sk Ramiz Raza Resume");
@@ -152,6 +157,34 @@ export default function ResumeBuilderPage() {
     },
   ]);
 
+  // Load existing resume data when queryId changes
+  useEffect(() => {
+    if (queryId) {
+      setResumeId(queryId);
+      loadExistingResume(queryId);
+    }
+  }, [queryId]);
+
+  const loadExistingResume = async (id: string) => {
+    setLoadingResume(true);
+    try {
+      const data: any = await getResumeByIdApi(id);
+      if (data) {
+        if (data.title) setTitle(data.title);
+        if (data.summary) setSummary(data.summary);
+        if (data.personalInfo) setPersonalInfo(data.personalInfo);
+        if (Array.isArray(data.skills) && data.skills.length > 0) setSkills(data.skills);
+        if (Array.isArray(data.workExperience) && data.workExperience.length > 0) setWorkExperience(data.workExperience);
+        if (Array.isArray(data.projects) && data.projects.length > 0) setProjects(data.projects);
+        if (Array.isArray(data.education) && data.education.length > 0) setEducation(data.education);
+      }
+    } catch (err) {
+      console.error("Failed to load existing resume:", err);
+    } finally {
+      setLoadingResume(false);
+    }
+  };
+
   // Active Tab & Modal States
   const [activeTab, setActiveTab] = useState<"personal" | "summary" | "skills" | "experience" | "projects" | "education">("personal");
   const [saving, setSaving] = useState(false);
@@ -229,14 +262,14 @@ export default function ResumeBuilderPage() {
     }
   };
 
-  // Save Resume
+  // Save Resume (Handles both Create & Update cleanly)
   const handleSaveResume = async () => {
     setSaving(true);
     setSaveSuccess(false);
     try {
       const payload: IResume = {
-        user_id: "demo-user-id" as any,
-        title,
+        user_id: "user" as any,
+        title: title || "Developer Resume",
         summary,
         personalInfo,
         workExperience,
@@ -244,10 +277,25 @@ export default function ResumeBuilderPage() {
         projects,
         skills,
       };
-      await createResumeApi(payload);
+
+      if (resumeId) {
+        // UPDATE existing resume
+        const updated: any = await updateResumeApi(resumeId, payload);
+        if (updated?._id) setResumeId(updated._id);
+      } else {
+        // CREATE new resume
+        const created: any = await createResumeApi(payload);
+        const newId = created?._id || created?.data?._id;
+        if (newId) {
+          setResumeId(newId);
+          router.replace(`/resumes/builder?id=${newId}`);
+        }
+      }
+
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (err) {
+      console.error("Save error:", err);
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);
     } finally {
@@ -275,6 +323,15 @@ export default function ResumeBuilderPage() {
       setAnalyzingAts(false);
     }
   };
+
+  if (loadingResume) {
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center space-y-4">
+        <Loader2 className="w-8 h-8 text-[#06D6A0] animate-spin" />
+        <p className="text-xs font-mono text-[#E6FBF6]/60">Loading resume content...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#030D0B] text-[#E6FBF6] flex flex-col font-sans">
@@ -936,5 +993,20 @@ export default function ResumeBuilderPage() {
       )}
 
     </div>
+  );
+}
+
+export default function ResumeBuilderPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-[70vh] flex flex-col items-center justify-center space-y-4">
+          <Loader2 className="w-8 h-8 text-[#06D6A0] animate-spin" />
+          <p className="text-xs font-mono text-[#E6FBF6]/60">Loading AI Resume Studio...</p>
+        </div>
+      }
+    >
+      <ResumeBuilderContent />
+    </Suspense>
   );
 }

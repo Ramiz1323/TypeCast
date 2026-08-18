@@ -39,3 +39,86 @@ export async function GET(
     );
   }
 }
+
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ resumeId: string }> }
+) {
+  try {
+    await connectDB();
+
+    let userId: string;
+    try {
+      userId = await getCurrentUser();
+    } catch {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized access" },
+        { status: 401 }
+      );
+    }
+
+    const { resumeId } = await params;
+    const body = await req.json();
+
+    const updatedResume = await ResumeModel.findOneAndUpdate(
+      { _id: resumeId, user_id: userId },
+      { $set: body },
+      { new: true }
+    );
+
+    if (!updatedResume) {
+      return NextResponse.json(
+        { success: false, message: "Resume not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(updatedResume, { status: 200 });
+  } catch (error) {
+    console.error("Error updating resume:", error);
+    return NextResponse.json(
+      { success: false, message: "Server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ resumeId: string }> }
+) {
+  try {
+    await connectDB();
+
+    let userId: string;
+    try {
+      userId = await getCurrentUser();
+    } catch {
+      return NextResponse.json(
+        { success: false, message: "Unauthorized access" },
+        { status: 401 }
+      );
+    }
+
+    const { resumeId } = await params;
+    const result = await ResumeModel.deleteOne({ _id: resumeId, user_id: userId });
+
+    if (result.deletedCount === 0) {
+      return NextResponse.json(
+        { success: false, message: "Resume not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { success: true, message: "Resume deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error deleting resume:", error);
+    return NextResponse.json(
+      { success: false, message: "Server error" },
+      { status: 500 }
+    );
+  }
+}

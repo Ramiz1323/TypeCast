@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getAllResumesApi } from "@/apis/resume.api";
+import { getAllResumesApi, deleteResumeApi } from "@/apis/resume.api";
 import { IResume } from "@/types/resume.types";
 import { useAuth } from "@/context/AuthContext";
 import {
@@ -12,11 +12,11 @@ import {
   Sparkles,
   BarChart2,
   Edit3,
+  Trash2,
   Loader2,
   Clock,
   Briefcase,
   ShieldAlert,
-  ArrowRight,
   LogIn,
 } from "lucide-react";
 
@@ -47,6 +47,20 @@ export default function DashboardPage() {
       setResumes([]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDelete = async (e: React.MouseEvent, resumeId?: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!resumeId) return;
+    if (!confirm("Are you sure you want to delete this resume?")) return;
+
+    try {
+      await deleteResumeApi(resumeId);
+      setResumes((prev) => prev.filter((r) => r._id !== resumeId));
+    } catch (err) {
+      console.error("Failed to delete resume:", err);
     }
   };
 
@@ -221,13 +235,24 @@ export default function DashboardPage() {
                       <span>Ready</span>
                     </div>
 
-                    <Link
-                      href={`/resumes/builder?id=${resume._id}`}
-                      className="px-3 py-1.5 rounded-lg bg-[#061814] text-[#06D6A0] hover:bg-[#0C4137] transition-all border border-[#0C4137] flex items-center gap-1.5 text-xs font-semibold"
-                    >
-                      <Edit3 className="w-3.5 h-3.5" />
-                      <span>Edit</span>
-                    </Link>
+                    <div className="flex items-center gap-2">
+                      <Link
+                        href={`/resumes/builder?id=${resume._id}`}
+                        className="px-3 py-1.5 rounded-lg bg-[#061814] text-[#06D6A0] hover:bg-[#0C4137] transition-all border border-[#0C4137] flex items-center gap-1.5 text-xs font-semibold"
+                        title="Edit Resume"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                        <span>Edit</span>
+                      </Link>
+
+                      <button
+                        onClick={(e) => handleDelete(e, resume._id)}
+                        className="p-1.5 rounded-lg bg-red-950/40 text-red-400 hover:bg-red-900/60 transition-all border border-red-500/20"
+                        title="Delete Resume"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
                   </div>
 
                 </div>
