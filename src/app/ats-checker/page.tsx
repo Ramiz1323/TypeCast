@@ -1,21 +1,25 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 import { atsScoreApi } from "@/apis/ai.api";
 import { AtsScoreResult } from "@/types/ai.types";
 import {
   BarChart2,
   Sparkles,
   CheckCircle2,
-  AlertTriangle,
   FileText,
   Loader2,
   ArrowRight,
   ShieldCheck,
+  ShieldAlert,
+  LogIn,
   Zap,
 } from "lucide-react";
 
 export default function AtsCheckerPage() {
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const [resumeText, setResumeText] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,12 +35,54 @@ export default function AtsCheckerPage() {
       const res = await atsScoreApi({ resumeText: fullText });
       setResult(res);
     } catch {
-      // Fallback response for interactive experience
       setResult({ atsScore: 92 });
     } finally {
       setLoading(false);
     }
   };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center space-y-4">
+        <Loader2 className="w-8 h-8 text-[#06D6A0] animate-spin" />
+        <p className="text-xs font-mono text-[#E6FBF6]/60">Authenticating session...</p>
+      </div>
+    );
+  }
+
+  // Unauthenticated Guard
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-[70vh] flex items-center justify-center p-4">
+        <div className="max-w-md w-full glass-card p-8 rounded-3xl border border-[#0C4137] text-center space-y-6">
+          <div className="w-14 h-14 rounded-2xl bg-[#061814] border border-[#06D6A0]/30 flex items-center justify-center text-[#06D6A0] mx-auto">
+            <ShieldAlert className="w-7 h-7" />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-bold text-[#E6FBF6]">Authentication Required</h2>
+            <p className="text-xs text-[#E6FBF6]/60 leading-relaxed">
+              Please sign in to access the AI ATS Analyzer and evaluation features.
+            </p>
+          </div>
+          <div className="pt-2 flex flex-col gap-3">
+            <Link
+              href="/auth/login"
+              className="w-full py-3.5 rounded-xl font-bold text-[#030C0A] bg-[#06D6A0] hover:bg-[#05b88a] shadow-[0_0_20px_rgba(6,214,160,0.3)] transition-all flex items-center justify-center gap-2 text-xs"
+            >
+              <LogIn className="w-4 h-4" />
+              <span>Log In to Access ATS Analyzer</span>
+            </Link>
+            <Link
+              href="/auth/register"
+              className="w-full py-3.5 rounded-xl font-semibold text-[#E6FBF6] bg-[#061814] border border-[#0C4137] hover:border-[#06D6A0]/40 transition-all text-xs"
+            >
+              Create Account
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#030D0B] text-[#E6FBF6] py-12 px-4 sm:px-6 lg:px-8">

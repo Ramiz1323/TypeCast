@@ -3,8 +3,19 @@ import { GenerateSummaryBody } from "@/types/ai.types";
 import { ApiResponse } from "@/types/api.types";
 import { NextRequest, NextResponse } from "next/server";
 
+import { getCurrentUser } from "@/lib/getCurrentUser";
+
 export async function POST(req: NextRequest) {
     try {
+        try {
+            await getCurrentUser();
+        } catch {
+            return NextResponse.json<ApiResponse<null>>({
+                success: false,
+                message: "Unauthorized access. Token not found."
+            }, { status: 401 });
+        }
+
         const body: GenerateSummaryBody = await req.json();
         const { experienceLevel, skills, jobTitle } = body;
 

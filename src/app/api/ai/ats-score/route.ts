@@ -1,10 +1,24 @@
 import { generateAiResponse } from "@/lib/gemini";
+import { getCurrentUser } from "@/lib/getCurrentUser";
 import { AtsScoreBody, AtsScoreResult } from "@/types/ai.types";
 import { ApiResponse } from "@/types/api.types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
+    try {
+      await getCurrentUser();
+    } catch {
+      return NextResponse.json<ApiResponse<null>>(
+        {
+          success: false,
+          message: "Unauthorized access. Token not found.",
+          data: null,
+        },
+        { status: 401 }
+      );
+    }
+
     const body: AtsScoreBody = await req.json();
 
     const { resumeText } = body;

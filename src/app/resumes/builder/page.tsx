@@ -38,6 +38,9 @@ import {
   Mail,
   Phone,
   Globe,
+  ShieldAlert,
+  LogIn,
+  Lock,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
@@ -60,13 +63,17 @@ function ResumeBuilderContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryId = searchParams.get("id");
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
 
   const [resumeId, setResumeId] = useState<string | null>(queryId);
   const [loadingResume, setLoadingResume] = useState<boolean>(!!queryId);
 
+  // Auth Prompt Modal State
+  const [showAuthModal, setShowAuthModal] = useState<boolean>(false);
+  const [authFeatureName, setAuthFeatureName] = useState<string>("saving resumes or using AI tools");
+
   // Resume Form State
-  const [title, setTitle] = useState("Sk Ramiz Raza Resume");
+  const [title, setTitle] = useState("My Resume");
   const [personalInfo, setPersonalInfo] = useState<IPersonalInfo>({
     fullname: user?.name || "Sk Ramiz Raza",
     email: user?.email || "Ramizraza2313@gmail.com",
@@ -214,8 +221,13 @@ function ResumeBuilderContent() {
     setSkills(skills.filter((s) => s !== skillToRemove));
   };
 
-  // AI Actions
+  // AI Actions (Guarded by Auth)
   const handleAiGenerateSummary = async () => {
+    if (!isAuthenticated) {
+      setAuthFeatureName("generating AI summaries");
+      setShowAuthModal(true);
+      return;
+    }
     setAiGenerating("summary");
     try {
       const generated = await generateSummaryApi({
@@ -234,6 +246,11 @@ function ResumeBuilderContent() {
   };
 
   const handleAiGenerateSkills = async () => {
+    if (!isAuthenticated) {
+      setAuthFeatureName("suggesting AI skills");
+      setShowAuthModal(true);
+      return;
+    }
     setAiGenerating("skills");
     try {
       const res = await generateSkillsApi({
@@ -252,6 +269,11 @@ function ResumeBuilderContent() {
   };
 
   const handleAiImproveSummary = async () => {
+    if (!isAuthenticated) {
+      setAuthFeatureName("polishing content with AI");
+      setShowAuthModal(true);
+      return;
+    }
     if (!summary) return;
     setAiGenerating("improveSummary");
     try {
@@ -266,8 +288,14 @@ function ResumeBuilderContent() {
     }
   };
 
-  // Save Resume (Handles both Create & Update cleanly)
+  // Save Resume (Guarded by Auth)
   const handleSaveResume = async () => {
+    if (!isAuthenticated) {
+      setAuthFeatureName("saving resumes to your account");
+      setShowAuthModal(true);
+      return;
+    }
+
     setSaving(true);
     setSaveSuccess(false);
     try {
@@ -282,11 +310,9 @@ function ResumeBuilderContent() {
       };
 
       if (resumeId) {
-        // UPDATE existing resume
         const updated: any = await updateResumeApi(resumeId, payload);
         if (updated?._id) setResumeId(updated._id);
       } else {
-        // CREATE new resume
         const created: any = await createResumeApi(payload);
         const newId = created?._id || created?.data?._id;
         if (newId) {
@@ -305,8 +331,14 @@ function ResumeBuilderContent() {
     }
   };
 
-  // Run ATS Check
+  // Run ATS Check (Guarded by Auth)
   const handleRunAtsCheck = async () => {
+    if (!isAuthenticated) {
+      setAuthFeatureName("running the ATS Score Analyzer");
+      setShowAuthModal(true);
+      return;
+    }
+
     setAnalyzingAts(true);
     setShowAtsModal(true);
     try {
@@ -358,6 +390,7 @@ function ResumeBuilderContent() {
           >
             <BarChart2 className="w-3.5 h-3.5" />
             <span>ATS Analyzer</span>
+            {!isAuthenticated && <Lock className="w-3 h-3 text-[#06D6A0]/70" />}
           </button>
 
           <button
@@ -381,6 +414,7 @@ function ResumeBuilderContent() {
               <Save className="w-3.5 h-3.5" />
             )}
             <span>{saveSuccess ? "Saved!" : "Save Resume"}</span>
+            {!isAuthenticated && <Lock className="w-3 h-3 text-[#030D0B]/70" />}
           </button>
         </div>
 
@@ -500,6 +534,7 @@ function ResumeBuilderContent() {
                   >
                     {aiGenerating === "summary" ? <Loader2 className="w-3 h-3 animate-spin" /> : <Wand2 className="w-3 h-3" />}
                     <span>Generate</span>
+                    {!isAuthenticated && <Lock className="w-3 h-3 text-[#030D0B]/70" />}
                   </button>
 
                   <button
@@ -509,6 +544,7 @@ function ResumeBuilderContent() {
                   >
                     {aiGenerating === "improveSummary" ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3 text-[#06D6A0]" />}
                     <span>Polish</span>
+                    {!isAuthenticated && <Lock className="w-3 h-3 text-[#06D6A0]/70" />}
                   </button>
                 </div>
               </div>
@@ -538,6 +574,7 @@ function ResumeBuilderContent() {
                 >
                   {aiGenerating === "skills" ? <Loader2 className="w-3 h-3 animate-spin" /> : <Wand2 className="w-3 h-3" />}
                   <span>Suggest Skills</span>
+                  {!isAuthenticated && <Lock className="w-3 h-3 text-[#030D0B]/70" />}
                 </button>
               </div>
 
@@ -552,7 +589,7 @@ function ResumeBuilderContent() {
                 />
                 <button
                   onClick={handleAddSkill}
-                  className="px-3 py-2 bg-[#0C4137] text-[#06D6A0] rounded-xl text-xs font-semibold hover:bg-[#0C4137]/80 border border-[#06D6A0]/30"
+                  className="px-3 py-2 bg-[#0C4137] text-[#06D6A0] rounded-xl text-xs font-semibold hover:bg-[#0C4137]/80 border border-[#06D6A0]/30 cursor-pointer"
                 >
                   Add
                 </button>
@@ -599,7 +636,7 @@ function ResumeBuilderContent() {
                       },
                     ])
                   }
-                  className="px-3 py-1 rounded-lg text-[11px] font-semibold text-[#06D6A0] bg-[#061814] border border-[#06D6A0]/30 hover:bg-[#0C4137] transition-all flex items-center gap-1"
+                  className="px-3 py-1 rounded-lg text-[11px] font-semibold text-[#06D6A0] bg-[#061814] border border-[#06D6A0]/30 hover:bg-[#0C4137] transition-all flex items-center gap-1 cursor-pointer"
                 >
                   <Plus className="w-3 h-3" />
                   <span>Add Role</span>
@@ -702,7 +739,7 @@ function ResumeBuilderContent() {
                       },
                     ])
                   }
-                  className="px-3 py-1 rounded-lg text-[11px] font-semibold text-[#06D6A0] bg-[#061814] border border-[#06D6A0]/30 hover:bg-[#0C4137] transition-all flex items-center gap-1"
+                  className="px-3 py-1 rounded-lg text-[11px] font-semibold text-[#06D6A0] bg-[#061814] border border-[#06D6A0]/30 hover:bg-[#0C4137] transition-all flex items-center gap-1 cursor-pointer"
                 >
                   <Plus className="w-3 h-3" />
                   <span>Add Project</span>
@@ -929,6 +966,54 @@ function ResumeBuilderContent() {
         </div>
 
       </div>
+
+      {/* Auth Guard Modal for Unauthenticated Users */}
+      {showAuthModal && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="glass-card max-w-md w-full p-6 sm:p-8 rounded-3xl border border-[#06D6A0]/40 space-y-6 text-center animate-in zoom-in-95">
+            <div className="w-14 h-14 rounded-2xl bg-[#061814] border border-[#06D6A0]/40 flex items-center justify-center text-[#06D6A0] mx-auto">
+              <ShieldAlert className="w-7 h-7" />
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-xl font-bold text-[#E6FBF6]">Authentication Required</h3>
+              <p className="text-xs text-[#E6FBF6]/70 leading-relaxed">
+                Log in or create a free account to unlock <span className="text-[#06D6A0] font-semibold">{authFeatureName}</span>. Unauthenticated users can manually edit fields and export PDFs freely!
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 pt-2">
+              <button
+                onClick={() => {
+                  setShowAuthModal(false);
+                  router.push("/auth/login");
+                }}
+                className="w-full py-3 rounded-xl font-bold text-[#030D0B] bg-[#06D6A0] hover:bg-[#05b88a] shadow-[0_0_20px_rgba(6,214,160,0.3)] transition-all text-xs cursor-pointer flex items-center justify-center gap-2"
+              >
+                <LogIn className="w-4 h-4" />
+                <span>Log In Now</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowAuthModal(false);
+                  router.push("/auth/register");
+                }}
+                className="w-full py-3 rounded-xl font-semibold text-[#E6FBF6] bg-[#061814] border border-[#0C4137] hover:border-[#06D6A0]/40 transition-all text-xs cursor-pointer"
+              >
+                Create Free Account
+              </button>
+
+              <button
+                onClick={() => setShowAuthModal(false)}
+                className="text-xs text-[#E6FBF6]/50 hover:text-white pt-1 cursor-pointer"
+              >
+                Continue PDF Edit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ATS Score Analyzer Modal */}
       {showAtsModal && (

@@ -23,11 +23,13 @@ export default function Navbar() {
   const { user, loading, isAuthenticated, logout } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const navLinks = [
-    { href: "/dashboard", label: "Dashboard", icon: FileText },
-    { href: "/resumes/builder", label: "AI Builder", icon: Sparkles },
-    { href: "/ats-checker", label: "ATS Analyzer", icon: BarChart2 },
-  ];
+  const navLinks = isAuthenticated
+    ? [
+        { href: "/dashboard", label: "Dashboard", icon: FileText },
+        { href: "/resumes/builder", label: "AI Builder", icon: Sparkles },
+        { href: "/ats-checker", label: "ATS Analyzer", icon: BarChart2 },
+      ]
+    : [{ href: "/resumes/builder", label: "AI Builder", icon: Sparkles }];
 
   const handleLogoutClick = async () => {
     setDropdownOpen(false);
