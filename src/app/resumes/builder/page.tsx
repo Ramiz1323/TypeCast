@@ -75,26 +75,26 @@ function ResumeBuilderContent() {
   // Resume Form State
   const [title, setTitle] = useState("My Resume");
   const [personalInfo, setPersonalInfo] = useState<IPersonalInfo>({
-    fullname: user?.name || "Sk Ramiz Raza",
-    email: user?.email || "Ramizraza2313@gmail.com",
-    mobile: "6289338509",
-    location: "Kolkata, West Bengal",
-    github: "github.com/sk-ramiz-raza",
-    linkedIn: "in/sk-ramiz-raza",
-    portfolio: "skramizraza.tech",
+    fullname: user?.name || "Alex Mercer",
+    email: user?.email || "alex.mercer@devstudio.io",
+    mobile: "+1 (555) 234-5678",
+    location: "San Francisco, CA",
+    github: "github.com/alexmercer",
+    linkedIn: "linkedin.com/in/alex-mercer",
+    portfolio: "alexmercer.dev",
   });
 
   const [summary, setSummary] = useState(
-    "Full-stack developer specializing in building scalable web applications and AI-driven systems using React, Next.js, and Node.js. Experienced in designing secure, high-performance architectures with REST APIs, JWT authentication, and efficient data handling using MongoDB and Redis. Developed advanced projects integrating LangChain, computer vision (MediaPipe), and real-time systems, delivering intelligent, user-centric solutions. Strong focus on performance optimization, system design, and building production-ready applications."
+    "Full-stack software engineer with 5+ years of experience building scalable web applications, distributed systems, and AI-driven platforms. Proficient in React, Next.js, Node.js, and cloud architectures. Strong track record of optimizing system performance, reducing API latency, and leading cross-functional engineering teams."
   );
 
   const [skills, setSkills] = useState<string[]>([
     "Programming & Core: JavaScript (ES6+), TypeScript, Python, SQL",
     "Frontend: React.js, Next.js, Redux Toolkit, Tailwind CSS, SCSS, Framer Motion",
     "Backend & APIs: Node.js, Express.js, REST API Development, JWT Authentication",
-    "Database & Storage: MongoDB, Mongoose, Redis",
-    "Advanced Tech: LangChain, Mistral AI, MediaPipe (Computer Vision), AI Integration",
-    "Tools & DevOps: Git, GitHub, Vite, Postman, Axios, Docker (Basic)",
+    "Database & Storage: MongoDB, Mongoose, PostgreSQL, Redis",
+    "Advanced Tech: LangChain, Mistral AI, AI Integration, Vector Search",
+    "Tools & DevOps: Git, GitHub, Vite, Postman, Docker, CI/CD Pipelines",
     "Security & Validation: Zod, Bcrypt.js, Input Validation, Role-Based Access Control (RBAC)",
     "Data & Visualization: Recharts, Data Analysis, JSON Handling",
   ]);
@@ -102,59 +102,46 @@ function ResumeBuilderContent() {
 
   const [workExperience, setWorkExperience] = useState<IWorkExperience[]>([
     {
-      companyName: "ARDENT COMPUTECH PVT LTD",
-      position: "Full Stack Web Developer",
-      location: "Kolkata, West Bengal",
-      startDate: "October 2025",
-      endDate: "December 2025",
-      description: "• Built a scalable full-stack expense management system using React, Node.js, and MongoDB with secure JWT-based authentication.\n• Designed RESTful APIs and optimized data handling to deliver real-time insights and high-performance user experience.",
+      companyName: "TECH CORP LABS",
+      position: "Senior Full Stack Engineer",
+      location: "San Francisco, CA",
+      startDate: "Jan 2024",
+      endDate: "Present",
+      description: "• Architected microservices backend processing 100k+ daily active users using Node.js and MongoDB.\n• Reduced frontend bundle sizes by 35% and improved Lighthouse performance score from 65 to 98.",
     },
     {
-      companyName: "GAOTek Inc.",
-      position: "Web Design Intern",
-      location: "Remote",
-      startDate: "March 2025",
-      endDate: "July 2025",
-      description: "• Developed and maintained scalable web applications with a focus on performance, responsiveness, and clean architecture.\n• Implemented end-to-end features across frontend and backend while collaborating in team-driven development environments following industry.",
+      companyName: "CLOUD PULSE SOLUTIONS",
+      position: "Software Engineer",
+      location: "Austin, TX",
+      startDate: "Jun 2021",
+      endDate: "Dec 2023",
+      description: "• Built real-time analytics dashboards using Next.js, Redux Toolkit, and WebSocket integrations.\n• Implemented secure JWT authentication and Role-Based Access Control (RBAC) across enterprise portals.",
     },
   ]);
 
   const [projects, setProjects] = useState<IProjects[]>([
     {
-      title: "Lyra AI (Advanced Research & Synthesis Engine)",
-      description: "• Architected an agentic AI research engine using LangChain and Mistral AI to synthesize real-time web data into structured, citation-backed.\n• Built real-time streaming responses with Socket.io, reducing perceived latency by ~40% and improving user interaction.\n• Developed scalable REST APIs with Node.js and Express, implementing secure JWT authentication and Bcrypt-based encryption.\n• Managed complex application state using Redux Toolkit, enabling persistent multi-session chat and seamless UX.\n• Designed a high-performance UI with SCSS and Vite, ensuring sub-1s load times with strong validation using Zod for data integrity.",
-      gitHubUrl: "github.com/sk-ramiz-raza/lyra-ai",
-      liveUrl: "lyra-ai.tech",
-      techStack: ["LangChain", "Mistral AI", "Socket.io", "React", "Node.js"],
+      title: "Nova AI – Autonomous Code Review & Synthesis Engine",
+      description: "• Developed an AI-driven code analysis tool using Gemini API and TypeScript to perform automated PR reviews.\n• Integrated WebSocket streaming to deliver instant feedback, reducing manual code review time by 40%.",
+      gitHubUrl: "github.com/alexmercer/nova-ai",
+      liveUrl: "nova-ai.dev",
+      techStack: ["Gemini API", "TypeScript", "WebSocket", "React", "Node.js"],
     },
     {
-      title: "FinTrack – Full-Stack Enterprise-Grade Personal Finance Management Platform",
-      description: "• Built a full-stack finance platform using Next.js and TypeScript with optimized performance (+40% load speed).\n• Developed analytics dashboards for expense tracking and financial insights.\n• Implemented secure JWT-based authentication and RBAC system.\n• Ensured data consistency using Zod validation and MongoDB schemas.",
-      gitHubUrl: "github.com/sk-ramiz-raza/fintrack",
-      liveUrl: "fintrack.dev",
-      techStack: ["Next.js", "TypeScript", "MongoDB", "Zod", "Tailwind"],
-    },
-    {
-      title: "Cineva — AI-Powered Movie Discovery Engine & Gesture-Controlled Platform",
-      description: "• Engineered an AI-powered movie discovery platform using MediaPipe for real-time facial analysis and mood-based recommendations.\n• Implemented gesture-controlled navigation via hand-tracking and custom React hooks for touchless user interaction.\n• Built a high-performance backend with Redis caching, reducing API load and rate-limit triggers by ~70%.\n• Optimized search and data flow using debouncing and Redux caching, lowering API overhead by ~60%.\n• Built a secure RBAC admin system and responsive UI with Tailwind and Framer Motion, achieving 90+ Lighthouse scores and <1.5s FCP.",
-      gitHubUrl: "github.com/sk-ramiz-raza/cineva",
-      liveUrl: "cineva.app",
-      techStack: ["MediaPipe", "Redis", "React", "Redux", "Tailwind"],
+      title: "FlowMetrics – Enterprise Performance Analytics Platform",
+      description: "• Engineered full-stack analytics engine with Next.js, PostgreSQL, and Chart.js for real-time telemetry tracking.\n• Implemented Redis caching layer resulting in sub-50ms API response times.",
+      gitHubUrl: "github.com/alexmercer/flowmetrics",
+      liveUrl: "flowmetrics.io",
+      techStack: ["Next.js", "TypeScript", "PostgreSQL", "Redis", "Tailwind"],
     },
   ]);
 
   const [education, setEducation] = useState<IEducation[]>([
     {
-      institutionName: "Netaji Subhash Engineering College • Kolkata, West Bengal • 2027",
-      degree: "Bachelor of Computer Applications, Computer Applications",
-      startDate: "2023",
-      endDate: "2027",
-    },
-    {
-      institutionName: "Netaji Subhas Open University • Salt Lake City, Kolkata • 2027",
-      degree: "Bachelor of Science, Physics",
-      startDate: "2023",
-      endDate: "2027",
+      institutionName: "California Institute of Technology • Pasadena, CA • 2021",
+      degree: "Bachelor of Science, Computer Science",
+      startDate: "2017",
+      endDate: "2021",
     },
   ]);
 
@@ -733,7 +720,7 @@ function ResumeBuilderContent() {
                       {
                         title: "New Project Title",
                         description: "• Built a full-stack application.",
-                        gitHubUrl: "github.com/sk-ramiz-raza/project",
+                        gitHubUrl: "github.com/alexmercer/project",
                         liveUrl: "project.app",
                         techStack: ["React", "Node.js"],
                       },
@@ -831,7 +818,7 @@ function ResumeBuilderContent() {
             {/* Header: Name & Contact Row */}
             <div className="text-center space-y-1.5 pb-2 border-b border-gray-300">
               <h1 className="text-3xl font-bold tracking-normal text-black font-serif">
-                {personalInfo.fullname || "Sk Ramiz Raza"}
+                {personalInfo.fullname || "Alex Mercer"}
               </h1>
 
               <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-gray-800 font-serif pt-0.5">
