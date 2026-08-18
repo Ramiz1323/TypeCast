@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { registerApi } from "@/apis/auth.api";
+import { registerApi, loginApi } from "@/apis/auth.api";
+import { useAuth } from "@/context/AuthContext";
 import { Sparkles, User, Mail, Lock, ArrowRight, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { checkAuth } = useAuth();
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,10 +38,10 @@ export default function RegisterPage() {
 
     try {
       await registerApi(form);
-      setSuccess("Account created successfully! Redirecting to login...");
-      setTimeout(() => {
-        router.push("/auth/login");
-      }, 1200);
+      await loginApi({ email: form.email, password: form.password });
+      await checkAuth();
+      setSuccess("Account created successfully! Redirecting to dashboard...");
+      router.push("/dashboard");
     } catch (err: any) {
       setError(
         err?.response?.data?.message || "Registration failed. Email may already be in use."

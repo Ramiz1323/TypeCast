@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { loginApi } from "@/apis/auth.api";
+import { useAuth } from "@/context/AuthContext";
 import { Sparkles, Mail, Lock, ArrowRight, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 
 export default function LoginPage() {
@@ -12,6 +13,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  const { checkAuth } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -30,10 +33,9 @@ export default function LoginPage() {
 
     try {
       await loginApi(form);
+      await checkAuth();
       setSuccess("Welcome back! Redirecting to dashboard...");
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1000);
+      router.push("/dashboard");
     } catch (err: any) {
       setError(
         err?.response?.data?.message || "Login failed. Please verify your email and password."
