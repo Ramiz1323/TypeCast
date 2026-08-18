@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles, Heart, Github, Twitter, Linkedin } from "lucide-react";
+import { Sparkles, Heart } from "lucide-react";
 
 export default function Footer() {
   return (
