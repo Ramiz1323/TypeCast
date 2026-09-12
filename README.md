@@ -1,331 +1,457 @@
-# TypeCast — AI-Powered Resume Engineering Studio
+# TypeCast — AI-Powered Resume Engineering & ATS Intelligence Studio
 
-[![Framework: Next.js 16](https://img.shields.io/badge/Framework-Next.js%2016-000000?style=flat&logo=next.js&logoColor=white)](#)
-[![UI: React 19](https://img.shields.io/badge/UI-React%2019-20232A?style=flat&logo=react&logoColor=61DAFB)](#)
-[![Language: TypeScript](https://img.shields.io/badge/Language-TypeScript%205-3178C6?style=flat&logo=typescript&logoColor=white)](#)
-[![Styling: Tailwind CSS 4](https://img.shields.io/badge/Styling-Tailwind%20CSS%204-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](#)
-[![AI: Google Gemini](https://img.shields.io/badge/AI-Google%20Gemini-4285F4?style=flat&logo=google&logoColor=white)](#)
-[![Database: MongoDB / Mongoose](https://img.shields.io/badge/Database-MongoDB%20%2F%20Mongoose-47A248?style=flat&logo=mongodb&logoColor=white)](#)
-[![Auth: JWT & bcrypt](https://img.shields.io/badge/Auth-JWT%20%26%20bcrypt-FF6F61?style=flat&logo=jsonwebtokens&logoColor=white)](#)
+[![Framework: Next.js 16](https://img.shields.io/badge/Framework-Next.js%2016-000000?style=flat-square&logo=next.js&logoColor=white)](#)
+[![UI: React 19](https://img.shields.io/badge/UI-React%2019-20232A?style=flat-square&logo=react&logoColor=61DAFB)](#)
+[![Language: TypeScript 5](https://img.shields.io/badge/Language-TypeScript%205-3178C6?style=flat-square&logo=typescript&logoColor=white)](#)
+[![Styling: Tailwind CSS 4](https://img.shields.io/badge/Styling-Tailwind%20CSS%204-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](#)
+[![AI Engine: Google Gemini 3.6 Flash](https://img.shields.io/badge/AI%20Engine-Gemini%203.6%20Flash-4285F4?style=flat-square&logo=google&logoColor=white)](#)
+[![Database: MongoDB / Mongoose](https://img.shields.io/badge/Database-MongoDB%20%2F%20Mongoose-47A248?style=flat-square&logo=mongodb&logoColor=white)](#)
+[![Auth: JWT & bcrypt](https://img.shields.io/badge/Auth-JWT%20%26%20bcrypt-FF6F61?style=flat-square&logo=jsonwebtokens&logoColor=white)](#)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg?style=flat-square)](LICENSE)
 
-TypeCast is a developer-focused AI resume engineering platform built on **Next.js 16 (App Router)** and **React 19**. It addresses the compound problem of building technically strong resumes: writing content that reads well to human reviewers while simultaneously satisfying the keyword and structure requirements of Applicant Tracking Systems (ATS). Most resume tools solve one side of that problem; TypeCast addresses both in a unified, authenticated workflow.
+TypeCast is a developer-centric, full-stack resume engineering platform built on **Next.js 16 (App Router)**, **React 19**, **TypeScript 5**, and **Google Gemini 3.6 Flash**. It addresses the compound challenge of software engineering resumes: formulating high-signal, quantifiable technical narratives for engineering hiring managers while satisfying the strict topological keyword and parsing heuristics of enterprise Applicant Tracking Systems (ATS).
 
-The platform combines a live split-screen resume editor, **Google Gemini**-powered content generation across six distinct resume workflows, a standalone ATS compatibility scorer, cloud-backed resume persistence with full CRUD, user authentication, and a print-optimized PDF export layer — all within a single full-stack Next.js application.
+The platform couples a reactive split-screen document builder with domain-specialized LLM generation workflows, an 11-dimensional ATS scoring pipeline, user-scoped cloud persistence, stateless `httpOnly` session security, and a dual-target print presentation engine.
 
 ---
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Core Capabilities](#core-capabilities)
-   - [AI Resume Studio](#ai-resume-studio)
-   - [Gemini AI Content Engine](#gemini-ai-content-engine)
-   - [ATS Score Analyzer](#ats-score-analyzer)
-   - [Cloud Resume Workspace](#cloud-resume-workspace)
-   - [Authentication & Account System](#authentication--account-system)
-   - [Print & PDF Export](#print--pdf-export)
-3. [Technical Architecture](#technical-architecture)
-   - [Presentation Layer](#presentation-layer)
-   - [Application Layer](#application-layer)
-   - [AI Service Layer](#ai-service-layer)
-   - [Data Layer](#data-layer)
-   - [Authentication Layer](#authentication-layer)
-4. [AI Engineering](#ai-engineering)
-5. [ATS Analysis](#ats-analysis)
-6. [Tech Stack](#tech-stack)
-7. [Data Architecture](#data-architecture)
-8. [Security & Authentication](#security--authentication)
-9. [Product Design & Print Architecture](#product-design--print-architecture)
-10. [Engineering Highlights](#engineering-highlights)
-11. [Future Roadmap](#future-roadmap)
-12. [Author](#author)
+- [Executive Summary](#executive-summary)
+- [System Architecture](#system-architecture)
+- [Core Workflow & AI Pipeline](#core-workflow--ai-pipeline)
+- [Tech Stack](#tech-stack)
+- [Key Engineering Capabilities](#key-engineering-capabilities)
+- [AI Prompt Engineering & Inference Pipeline](#ai-prompt-engineering--inference-pipeline)
+- [Data Architecture & Schema Design](#data-architecture--schema-design)
+- [Security Architecture & IDOR Mitigation](#security-architecture--idor-mitigation)
+- [Dual-Target Print Engine](#dual-target-print-engine)
+- [API Architecture & Endpoints](#api-architecture--endpoints)
+- [Repository Structure](#repository-structure)
+- [Roadmap](#roadmap)
+- [License](#license)
+- [Author](#author)
 
 ---
 
-## Overview
+## Executive Summary
 
-Creating a modern technical resume is harder than it appears. Formatting tends to break every time content changes, ATS filters reject well-qualified candidates based on keyword gaps, and generic resume builders produce generic output. TypeCast approaches the problem as a software engineering challenge rather than a document problem.
+Technical resume creation routinely breaks across two failure modes: human reviewers reject resumes lacking measurable technical depth and architectural context, while algorithmic ATS parsers discard candidates due to missing keyword matrices, irregular structural tags, or non-standard formatting.
 
-The application supports two modes. In **guest mode**, any user can immediately enter the split-screen resume studio, build a structured resume, preview it against a live A4 canvas, and export it as a browser-generated PDF — no account required. In **authenticated mode**, users gain access to the full Gemini AI content engine, the ATS Score Analyzer, and cloud-backed resume management. The platform is built as a proper full-stack application: Next.js handles both the frontend rendering and all server-side API routes, MongoDB stores structured resume documents with user-scoped ownership, and JWT-based authentication protects every privileged operation.
+TypeCast models resume authoring as a software engineering and structured-data challenge:
 
----
-
-## Core Capabilities
-
-### AI Resume Studio
-
-The central workspace is a split-screen editing environment. The left panel organizes resume content into modular section tabs — Personal Information, Professional Summary, Technical Skills, Work Experience, Projects, and Education. The right panel renders a live A4-formatted resume preview that updates immediately as data changes.
-
-Key behaviors:
-
-- **Live preview rendering** — structural resume layout refreshes in real time as the user edits
-- **Modular section management** — independent tabs for each resume section with independent state
-- **Dynamic list controls** — work experience entries, project entries, tech stack tags, and education records can be added, edited, or removed without affecting other sections
-- **Auth-aware UI** — unauthenticated users can build and preview a full resume; authenticated actions (save, AI generation, ATS analysis) surface contextual prompts without losing editor state
+1. **Normalized Data Modeling**: Instead of unstructured rich text or static templates, resume data is modeled into strictly typed, decoupled subdocuments (Personal Info, Summary, Technical Skills Matrix, Work History, Engineering Projects, and Credentials).
+2. **Dual-Mode Session Architecture**:
+   - **Frictionless Guest Workspace**: Unauthenticated users can immediately enter the split-screen studio (`/resumes/builder`), modify all document nodes, observe real-time A4 canvas updates, and trigger print/PDF export without authentication overhead.
+   - **Authenticated Cloud Tier**: Account verification grants access to the **Google Gemini 3.6 Flash** generative engine, the **ATS Compatibility Scorer**, and MongoDB-backed multi-resume lifecycle management.
+3. **Non-Destructive Context Preservation**: When guest users trigger protected actions (e.g., cloud sync or AI inference), an authentication interception layer captures the requirement without unmounting or wiping active in-memory editor state.
 
 ---
 
-### Gemini AI Content Engine
+## System Architecture
 
-TypeCast integrates Google Gemini directly via the `@google/genai` SDK across six structured AI workflows. This is not a general-purpose chatbot integration; each workflow uses a purpose-built prompt engineered specifically for ATS parsers and technical hiring reviewers.
+TypeCast operates as a consolidated, full-stack Next.js 16 application running in a Node.js runtime environment. Serverless App Router route handlers encapsulate API endpoints, eliminating the architectural overhead of an auxiliary Express or FastAPI daemon.
 
-| AI Workflow | What It Generates |
-| :--- | :--- |
-| Executive Summary Generator | 50–80 word ATS-oriented summary based on job title, skills, and experience level |
-| Skills Matrix Suggester | 8–12 role-specific hard and soft skills categorized by domain |
-| Work Experience Formatter | 80–120 word role-impact descriptions tailored to seniority (Fresher / Mid-Level / Senior) |
-| Project Description Generator | Concise technical project statements based on role, technologies, and architecture |
-| Content Improver & Polisher | Refines existing draft text for clarity, action verbs, and keyword density |
-| ATS Score Analyzer | Evaluates full resume text and returns a compatibility score from 0 to 100 |
+```mermaid
+flowchart TB
+  subgraph Client ["Client Presentation Layer (React 19 & Next.js 16)"]
+    direction TB
+    UI_Studio["Resume Studio (/resumes/builder)<br/>• Reactive Split-Screen Form & Canvas<br/>• Dual-Target Print Subsystem"]
+    UI_ATS["ATS Analyzer (/ats-checker)<br/>• 11-Factor Evaluation & Gap Analysis"]
+    UI_Dash["Developer Workspace (/dashboard)<br/>• Multi-Resume Lifecycle & Telemetry"]
+    UI_Auth["Auth Surfaces (/auth/login, /auth/register)"]
+    State_Layer["AuthContext & Domain Axios Wrappers<br/>• Optimistic State Synchronization<br/>• Non-Destructive Auth Interception"]
+    
+    UI_Studio --- State_Layer
+    UI_ATS --- State_Layer
+    UI_Dash --- State_Layer
+    UI_Auth --- State_Layer
+  end
 
-Each prompt is explicitly structured to preserve factual accuracy — the model is instructed not to fabricate credentials, invent technologies, or introduce unverifiable metrics. The user reviews and accepts or modifies AI-generated content before it is incorporated into the resume.
+  subgraph Server ["Next.js Full-Stack App Router Runtime (Node.js)"]
+    direction TB
+    
+    subgraph RouteHandlers ["RESTful Route Handlers (/api/*)"]
+      API_Auth["Auth & Identity<br/>• /api/login, /api/register<br/>• /api/auth/me, /api/auth/logout"]
+      API_Resume["Resume Persistence<br/>• /api/resumes (List)<br/>• /api/resumes/create<br/>• /api/resumes/:id (CRUD)"]
+      API_AI["AI Intelligence<br/>• /api/ai/generate-summary<br/>• /api/ai/generate-skills<br/>• /api/ai/generate-experience-description<br/>• /api/ai/generate-project-description<br/>• /api/ai/improve-content<br/>• /api/ai/ats-score"]
+    end
 
----
+    subgraph CoreServices ["Core Services & Middleware"]
+      AuthGuard["Session Resolution (getCurrentUser)<br/>• httpOnly Cookie Extraction<br/>• JWT Cryptographic Verification"]
+      DBConn["Database Gateway (connectDB)<br/>• Global Mongoose Connection Caching"]
+      GeminiGateway["LLM Client (gemini.ts)<br/>• @google/genai SDK Integration"]
+    end
 
-### ATS Score Analyzer
+    API_Auth --> CoreServices
+    API_Resume --> CoreServices
+    API_AI --> CoreServices
+  end
 
-The ATS analyzer is a dedicated, standalone feature (also accessible from within the studio) that evaluates resume content against eleven weighted criteria:
+  subgraph PersistenceLayer ["Data & Inference Layer"]
+    MongoDB[("MongoDB Cluster<br/>• users (salted bcrypt hashes)<br/>• resumes (user-scoped documents)")]
+    GeminiModel["Google Gemini 3.6 Flash<br/>• Inference API (gemini-3.6-flash)"]
+  end
 
-- Keyword optimization and density
-- Resume structure and section completeness
-- Professional summary quality
-- Technical skills presentation
-- Work experience descriptions
-- Project descriptions
-- Education details
-- Action-oriented language usage
-- Quantifiable achievement presence
-- Readability and document clarity
-- Overall ATS compatibility formatting
+  State_Layer -->|Asynchronous HTTP / Cookies| RouteHandlers
+  DBConn -->|Mongoose ODM Gateway| MongoDB
+  GeminiGateway -->|API Key Authorization| GeminiModel
+```
 
-The analyzer returns an overall score from **0 to 100** along with categorized feedback. When evaluating against a specific job posting, it performs keyword gap detection by comparing resume content against the job description text.
+### Architectural Layer Responsibilities
 
-The engineering significance: TypeCast does not only generate resume content — it closes the loop by evaluating that content against the same criteria ATS platforms use to filter candidates.
-
----
-
-### Cloud Resume Workspace
-
-Authenticated users have access to a dashboard-based resume library. This makes TypeCast a persistent workspace, not a one-session tool.
-
-- **Multi-resume storage** — create and maintain multiple resumes simultaneously, scoped to the authenticated account
-- **Resume lifecycle operations** — create, read, update, and delete resumes through a RESTful API backend
-- **Seamless reload** — any saved resume can be loaded back into the full editor through URL-based query parameter routing
-- **Dashboard overview** — quick workspace metrics including total stored resume count and AI engine availability
-
----
-
-### Authentication & Account System
-
-Authentication is a first-class concern in TypeCast. Registration, login, session validation, and logout are all implemented as Next.js API route handlers, keeping the authentication logic server-side.
-
-- User registration with email and password
-- Password hashing via `bcrypt` applied as a Mongoose pre-save middleware hook
-- JWT session tokens signed server-side and stored in `httpOnly` cookies
-- A dedicated `/api/auth/me` endpoint for session validation on page load
-- All resume operations require a verified, authenticated session
-- Guest users retain full access to the manual editor and print export
+- **Client Presentation Layer**: Built on React 19 hooks and Tailwind CSS 4. Features a split-screen reactive workspace with CSS grid layout, dark-mode Obsidian/Emerald design tokens (`--obsidian: #030D0B`, `--emerald: #06D6A0`), and glassmorphic UI components.
+- **RESTful API Layer**: Next.js App Router handlers enforce request-body validation, payload typing via `ApiResponse<T>` wrappers, correct HTTP semantics, and granular error isolation.
+- **Service & Security Core**: Centralized server libraries manage global Mongoose connection pooling (`src/lib/db.ts`), cryptographic session extraction (`src/lib/getCurrentUser.ts`), and singleton Gemini client orchestration (`src/lib/gemini.ts`).
+- **Persistence & Machine Intelligence**: MongoDB stores normalized documents with schema-level validation, while Gemini 3.6 Flash executes structured content generation and parsing evaluation.
 
 ---
 
-### Print & PDF Export
+## Core Workflow & AI Pipeline
 
-TypeCast maintains a dedicated print presentation model for the resume canvas. When the user triggers the browser print dialog, a separate print stylesheet activates:
+The sequence diagram below models the asynchronous orchestration across the client UI, serverless route handlers, session validation guards, the Google Gen AI client, and the database persistence layer:
 
-- The application shell (navigation, controls, panels) is suppressed entirely
-- The resume canvas switches to clean serif typography appropriate for formal documents
-- Page dimensions are configured for A4 with controlled margins
-- Background colors, shadows, and UI borders are removed for clean document rendering
-- The output is a single-page or multi-page document suitable for direct PDF saving
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Engineer as Software Engineer
+    participant Studio as Studio Client (React 19)
+    participant Route as Next.js API Route (/api/ai/*)
+    participant Auth as Session Guard (getCurrentUser)
+    participant Engine as Gemini Service (gemini.ts)
+    participant LLM as Google Gemini 3.6 Flash
+    participant DB as MongoDB (ResumeModel)
 
-This is an intentional architectural separation: the interactive editor UI and the printable document are rendered differently, ensuring the exported PDF matches professional resume formatting standards.
+    Engineer->>Studio: Trigger AI Generation (Summary / Role / ATS Check)
+    Studio->>Route: POST payload (role, skills, seniority, target text)
+    
+    alt Protected Endpoint Execution
+        Route->>Auth: Resolve session token from httpOnly cookie
+        alt Missing or Invalid Token
+            Auth-->>Route: Null / Expired Token Error
+            Route-->>Studio: 401 Unauthorized
+            Studio-->>Engineer: Activate Non-Destructive Auth Modal (Form State Preserved)
+        else Verified Token
+            Auth-->>Route: Return authenticated userId
+        end
+    end
 
----
+    Route->>Route: Assemble prompt with explicit word limits, anti-hallucination rules & JSON schema
+    Route->>Engine: generateAiResponse(prompt)
+    Engine->>LLM: ai.models.generateContent({ model: "gemini-3.6-flash", contents })
+    LLM-->>Engine: Raw model text response
+    Engine-->>Route: Model output stream
+    
+    alt ATS Evaluation Workflow
+        Route->>Route: Parse JSON & assert type constraints (0 <= atsScore <= 100)
+    else Structured Content Workflow
+        Route->>Route: Validate word count bounds & sanitize response text
+    end
 
-## Technical Architecture
-
-TypeCast is a full-stack application deployed as a single Next.js project. The same codebase serves the React frontend, all API routes, database operations, and AI service calls — without a separate backend process.
-
-### Presentation Layer
-
-The UI is built with **React 19** and styled with **Tailwind CSS 4**. The Next.js **App Router** governs page routing and layout composition. Key application pages include the landing page, the resume builder studio, the ATS checker, the authenticated dashboard, and the auth pages. Shared components (Navbar, Footer) are composed at the root layout level. An `AuthContext` React provider manages global authentication state and exposes login, logout, and session verification methods to all child components.
-
-### Application Layer
-
-Next.js App Router API routes handle all server-side logic. The API surface is organized into three functional domains: authentication routes, resume CRUD routes, and AI generation routes. This means no separate Express or FastAPI server — all server-side operations run as Next.js route handlers within the same application boundary. Client-side API communication is managed through a set of Axios-based wrapper modules organized by domain (auth, resume, AI).
-
-### AI Service Layer
-
-A centralized Google Gen AI client is initialized once in `src/lib/gemini.ts` and shared across all AI route handlers. Each AI route constructs a structured prompt tailored to its specific output format and passes it to the Gemini model. The prompts encode role context, experience level awareness, output length constraints, professional language requirements, and explicit anti-hallucination instructions. The AI routes do not persist generated content — content is returned to the client for the user to review and selectively apply to their resume.
-
-### Data Layer
-
-**MongoDB** provides the document storage layer. **Mongoose** handles schema definition, validation, connection management, and query execution. The Mongoose connection is initialized once and cached globally to avoid redundant connection overhead during the Next.js API request lifecycle. Data is structured around two core Mongoose models — User and Resume — with defined schemas covering all resume sections and authentication fields.
-
-### Authentication Layer
-
-Server-side authentication is built around `jsonwebtoken` for token signing and verification, and `bcrypt` for password security. Tokens are transported exclusively via `httpOnly` cookies. A utility function in `src/lib/getCurrentUser.ts` extracts and verifies the JWT from the request cookie on every protected API call. Session validation is enforced at the API route level, not delegated to the client.
-
----
-
-## AI Engineering
-
-AI in TypeCast is integrated into the application workflow rather than surfaced as an isolated feature. Six distinct AI operations each serve a specific function within the resume creation process.
-
-**Structured prompting** is the primary engineering mechanism. Each prompt specifies the task, the output format, the target length, the professional tone requirements, and explicit constraints around factual preservation. The model receives structured context — job title, experience level, technologies, existing content — and is instructed to produce output appropriate for ATS parsers and technical hiring reviewers.
-
-**Role and seniority awareness** shapes the output. The Work Experience and Project Description generators receive an experience level parameter (Fresher, Mid-Level, Senior) and adjust language, complexity, and claimed impact accordingly.
-
-**Content improvement** is handled separately from generation. The content polisher takes existing user-written text and improves it for action verb usage, keyword density, and clarity — without introducing fabricated achievements or credentials. This distinction matters: improvement prompts explicitly prohibit the model from inventing new facts.
-
-**ATS evaluation** closes the workflow loop. After a user has edited and AI-assisted their resume, the analyzer can evaluate the full resume text and return a structured 0–100 score across eleven criteria. This creates a measurable feedback signal rather than leaving quality assessment entirely subjective.
-
-The AI layer does not retain state between requests. Each API call is stateless — the relevant context is passed in the request payload and the structured response is returned to the client.
-
----
-
-## ATS Analysis
-
-The ATS Score Analyzer evaluates resume content across eleven criteria and returns a 0–100 compatibility score. The eleven dimensions cover:
-
-- Keyword optimization
-- Resume structure and section completeness
-- Professional summary presence and quality
-- Technical skills coverage
-- Work experience impact framing
-- Project description quality
-- Education section completeness
-- Action-oriented language usage
-- Quantifiable achievement presence
-- Readability
-- ATS formatting compliance
-
-The analyzer operates both as a standalone tool accessible from the dedicated ATS checker page and as an in-studio capability within the resume builder. When provided a job description alongside the resume, it performs keyword gap analysis between the two documents.
+    Route-->>Studio: 200/201 ApiResponse<T>
+    Studio->>Studio: Synchronize reactive state & trigger immediate A4 canvas re-render
+    
+    opt Cloud Persistence
+        Engineer->>Studio: Trigger Save Resume
+        Studio->>Route: PUT /api/resumes/:resumeId
+        Route->>DB: findOneAndUpdate({ _id: resumeId, user_id: userId }, $set)
+        DB-->>Route: Updated document confirmation
+        Route-->>Studio: 200 OK (Status acknowledged)
+    end
+```
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology | Engineering Role |
+| Layer | Technology | Version | Architectural Role |
+| :--- | :--- | :--- | :--- |
+| **Frontend Architecture** | Next.js | `16.2.7` | App Router framework managing routing, layouts, and serverless execution boundaries |
+| | React | `19.2.4` | Component composition, reactive split-screen document state, and lifecycle hooks |
+| | TypeScript | `^5` | End-to-end static typing across schemas, API contracts, and client interfaces |
+| **Styling & Design** | Tailwind CSS | `^4.3.3` | Utility-first styling with PostCSS integration and custom Obsidian/Emerald theme tokens |
+| | Lucide React | `^1.31.0` | Modular UI iconography across navigation, toolbar controls, and section tabs |
+| | Google Fonts | Web Fonts | Plus Jakarta Sans (display), Inter (UI body), JetBrains Mono (technical metadata) |
+| **Backend & Runtime** | Node.js | `>=18` | Serverless runtime executing App Router API route handlers |
+| **AI & Intelligence** | `@google/genai` | `^2.13.0` | Official Google Gen AI SDK invoking `gemini-3.6-flash` for inference and ATS analysis |
+| **Database & ODM** | MongoDB | Cloud / Local | Document database storing user credentials and nested resume documents |
+| | Mongoose | `^9.6.3` | Schema definition, validation, global connection caching, and lifecycle middleware |
+| **Security & Auth** | `jsonwebtoken` | `^9.0.3` | Stateless cryptographic JWT generation and server-side verification |
+| | `bcrypt` | `^6.0.0` | Salted cryptographic password hashing enforced via Mongoose `pre("save")` hooks |
+| **API Orchestration** | Axios | `^1.19.0` | Promise-based HTTP client organized into domain-specific service abstraction modules |
+
+---
+
+## Key Engineering Capabilities
+
+### 1. Split-Screen Reactive Studio (`/resumes/builder`)
+- **Dual-Pane Grid System**: Form controls and live document preview are rendered synchronously using a 5:7 column split layout. Form state mutations immediately re-render the A4 canvas without visible layout shift or input latency.
+- **Section Isolation**: Resume segments (Personal, Summary, Skills, Work History, Projects, Education) are organized into decoupled tabs, allowing targeted updates to specific data structures without unmounting adjacent inputs.
+- **Dynamic List Controls**: Specialized mutation handlers allow engineers to append, reorder, edit, and prune nested array items (such as work experience achievements or project tech stack tags) with isolated state management.
+
+### 2. Google Gemini 3.6 Flash Content Engine
+- **Seniority-Aware Prompting**: AI generation adapts tone, lexical density, and responsibility framing across three seniority tiers:
+  - *Fresher*: Focuses on foundational technical skills, academic coursework, and capstone project delivery.
+  - *Mid-Level*: Focuses on hands-on feature ownership, system contributions, and cross-functional execution.
+  - *Senior*: Focuses on distributed systems architecture, strategic technical decisions, team mentorship, and organizational KPIs.
+- **Deterministic Output Contracts**: Endpoints enforce strict length caps (e.g., 50–80 words for executive summaries; 80–120 words for work experience) to preserve document balance and prevent verbosity.
+
+### 3. 11-Factor ATS Score Analyzer (`/ats-checker`)
+- **Algorithmic Evaluation Heuristics**: Analyzes candidate resume content against 11 weighted dimensions:
+  1. ATS Keyword Optimization & Semantic Density
+  2. Structural Completeness & Hierarchy
+  3. Executive Summary Impact & Relevance
+  4. Work History & Responsibility Framing
+  5. Technical Skills Matrix Presentation
+  6. Technical Depth & Architectural Scope in Projects
+  7. Education & Credential Formatting
+  8. Action-Oriented Language Usage
+  9. Quantifiable Metrics, Scale, and KPIs
+  10. Document Clarity, Formatting, and Parser OCR Feasibility
+  11. Overall Role Alignment & Seniority Appropriateness
+- **Semantic Gap Analysis**: Accepts an optional target Job Description alongside resume text to detect missing competencies, frameworks, and domain-specific terminology.
+
+### 4. Cloud Resume Workspace (`/dashboard`)
+- **Multi-Document Lifecycle Management**: Authenticated engineers can manage distinct versions of their resume tailored for specific job profiles (e.g., Backend vs Full-Stack vs Systems Engineering).
+- **Workspace Metrics**: Displays real-time repository metrics including total stored documents, active AI model identifier (`Gemini 3.6 Engine`), and estimated ATS pass probability.
+
+---
+
+## AI Prompt Engineering & Inference Pipeline
+
+Rather than unstructured natural-language chats, TypeCast enforces strict prompt engineering rules designed specifically for automated parsers and engineering reviewers:
+
+| Endpoint | Input Payload | Strict Operational Constraints |
 | :--- | :--- | :--- |
-| Application Framework | Next.js 16 | Full-stack framework; App Router for pages and API routes |
-| UI Library | React 19 | Component-driven reactive interface architecture |
-| Language | TypeScript 5 | End-to-end type safety across schemas, API contracts, and client state |
-| Styling | Tailwind CSS 4 | Utility-first responsive design with PostCSS integration |
-| AI SDK | Google Gemini via `@google/genai` | Generative content assistance and ATS evaluation |
-| Database | MongoDB | Document store for users and structured resume records |
-| ODM | Mongoose | Schema definition, validation, and connection management |
-| Authentication | jsonwebtoken (JWT) | Server-side session token signing and verification |
-| Password Security | bcrypt | Salted cryptographic password hashing |
-| HTTP Client | Axios | Promise-based client-side API communication |
-| UI Icons | Lucide React | Lightweight, consistent interface iconography |
-| Typography | Google Fonts | Plus Jakarta Sans, Inter, and JetBrains Mono |
+| `/api/ai/generate-summary` | `jobTitle`, `skills[]`, `experienceLevel` | Bounded to 50–80 words; plain text only; zero bullet points or markdown headers; zero first-person pronouns (`I`, `me`, `my`); embeds target technologies naturally. |
+| `/api/ai/generate-skills` | `jobTitle`, `experienceLevel` | Returns 8–12 role-tailored technical and soft skills as comma-separated plain text; stratified by seniority tier. |
+| `/api/ai/generate-experience-description` | `jobRole`, `technologies[]`, `yearsOfExperience`, `experienceLevel` | Bounded to 80–120 words; emphasizes technical ownership, problem-solving, and deliverables; avoids generic buzzwords. |
+| `/api/ai/generate-project-description` | `projectName`, `projectTitle`, `projectType`, `role`, `technologies[]`, `experienceLevel` | Bounded to 80–120 words; highlights architectural patterns, tech stack integration, and quantifiable project outcomes. |
+| `/api/ai/improve-content` | `content` | Refines raw candidate drafts for active voice, clarity, and keyword density; strictly prohibits inventing unverified skills, achievements, or employment history. |
+| `/api/ai/ats-score` | `resumeText` | Evaluates full text against 11 dimensions; outputs validated JSON `{"atsScore": <number>}`; score verified between `0` and `100`; returns HTTP 502 on invalid model output. |
 
 ---
 
-## Data Architecture
+## Data Architecture & Schema Design
 
-TypeCast's persistent data is organized around two primary entities.
+Persistent entities are modeled using Mongoose schemas in `src/models/` with synchronized TypeScript interfaces in `src/types/`.
 
-### User
+### 1. User Entity (`src/models/user.model.ts`)
+Encapsulates developer identity and authentication credentials:
+- **`name`**: Required string with trimming.
+- **`email`**: Unique, required, lowercase-indexed string.
+- **`password`**: Required string with length validation (min 4 characters).
+- **`mobile`**: Optional 10-digit contact string.
+- **`timestamps`**: Automatic `createdAt` and `updatedAt` audit fields.
+- **Mongoose Middleware**: A `pre("save")` hook detects password modification and applies `bcrypt.hashSync(this.password, 10)` prior to database persistence.
+- **Instance Method**: `comparePassword(candidatePassword: string): boolean` executes constant-time hash comparison for authentication.
 
-The User model stores account credentials and identity. Fields include full name, email (unique identifier), bcrypt-hashed password, and an optional contact number. Automatic timestamps track account creation and last modification. The model includes a `comparePassword` instance method used during authentication to verify credentials against the stored hash without exposing the raw value.
-
-### Resume
-
-The Resume model represents a complete, structured resume document. A resume record contains:
-
-- **Ownership reference** — a required reference linking the document to its owner User
-- **Resume title** — a user-assigned label (e.g., "Full Stack Developer Resume")
-- **Personal information** — full name, email, phone, location, GitHub, LinkedIn, and portfolio URL
-- **Professional summary** — the executive summary paragraph
-- **Education** — an array of institution, degree, and date records
-- **Work experience** — an array of role entries with company, position, location, dates, and description
-- **Projects** — an array of project records with title, description, repository URL, live URL, and technology stack
-- **Skills** — an array of technical and professional skill strings
-- **Certifications** — an array of professional certification strings
-
-All resume queries enforce a user ID match against the authenticated user's identity, ensuring that no user can access, modify, or delete another user's resume records.
-
----
-
-## Security & Authentication
-
-Security is implemented at multiple layers across the application.
-
-**Password storage** — user passwords are never stored in plaintext. A Mongoose pre-save middleware hook automatically hashes passwords with `bcrypt` before persisting them to MongoDB. The raw password is never accessible after the hashing step.
-
-**Session management** — JWT tokens are signed server-side using a secret loaded from environment configuration. Tokens are stored in `httpOnly` cookies, which are inaccessible to client-side JavaScript and mitigate XSS-based token theft. Cookies are configured with `sameSite` and `secure` flags in production environments.
-
-**User-scoped data access** — all resume API routes extract the authenticated user's ID from the verified JWT before executing any database query. Every fetch, update, and delete operation includes a user ID constraint, preventing Insecure Direct Object Reference (IDOR) vulnerabilities. A user who possesses another user's resume ID cannot retrieve or modify it through the API.
-
-**Mutation sanitization** — update payloads explicitly strip immutable fields before applying changes, preventing accidental or intentional schema corruption through the update API.
-
-**AI factuality guardrails** — content improvement and ATS evaluation prompts explicitly instruct the Gemini model not to invent credentials, skills, technologies, or quantified metrics. The user is always the final authority before any AI-generated content is applied to their resume.
-
-**Secret isolation** — all credentials (MongoDB URI, JWT secret, Gemini API key) are loaded from environment configuration and are never embedded in source code.
+### 2. Resume Entity (`src/models/resume.model.ts`)
+Encapsulates complete, structured engineering resumes:
+- **`user_id`**: ObjectId reference linked to the `User` model, enforcing document ownership.
+- **`title`**: Descriptive label (e.g., "Senior Full-Stack Engineer — Cloud Platforms").
+- **`summary`**: Executive summary string.
+- **`personalInfo`**: Subdocument containing `fullname`, `email`, `mobile`, `location`, `github`, `linkedIn`, and `portfolio`.
+- **`education`**: Array of subdocuments containing `institutionName`, `degree`, `startDate`, and `endDate`.
+- **`workExperience`**: Array of subdocuments containing `companyName`, `position`, `location`, `startDate`, `endDate`, and `description`.
+- **`projects`**: Array of subdocuments containing `title`, `description`, `gitHubUrl`, `liveUrl`, and `techStack` (string array).
+- **`skills`**: Array of categorized technical competence strings.
+- **`certifications`**: Array of verified credential strings.
 
 ---
 
-## Product Design & Print Architecture
+## Security Architecture & IDOR Mitigation
 
-TypeCast's interface uses an Obsidian/Emerald visual language: deep obsidian backgrounds, brunswick green borders, and glowing emerald accent highlights. The design system includes glassmorphism-style card components with blurred backdrops, subtle borders, and layered depth. Typography pairs *Plus Jakarta Sans* for headings, *Inter* for body text, and *JetBrains Mono* for technical metadata and code-adjacent labels.
+TypeCast incorporates defense-in-depth security mechanisms designed to protect developer data and prevent common web vulnerabilities:
 
-### Print & Export Architecture
+### 1. Cryptographic Insecure Direct Object Reference (IDOR) Mitigation
+All resume mutations derive authorization directly from the server-verified JWT cookie rather than accepting client-provided identity parameters:
 
-The resume preview canvas maintains a strict separation between its interactive editing presentation and its print presentation. When the print dialog is triggered, a dedicated print stylesheet activates:
+```typescript
+// Enforces dual-constraint query resolution (Document ID + Verified User ID)
+const userId = await getCurrentUser();
+const updatedResume = await ResumeModel.findOneAndUpdate(
+  { _id: resumeId, user_id: userId },
+  { $set: updateData },
+  { new: true }
+);
+```
 
-- All non-resume interface elements are hidden via suppression classes
-- The resume canvas switches to clean serif typography appropriate for formal printed documents
-- Page dimensions are configured for A4 with professional margins
-- All UI styling — backgrounds, shadows, borders, color overlays — is stripped to produce a clean black-on-white document
-- The output is a properly formatted single-page or multi-page document ready for PDF saving
+Even if a malicious actor acquires another candidate's document ID, cross-tenant reads, modifications, or deletions fail with a `404 Not Found` response.
 
-This is a deliberate engineering decision: the resume editing experience and the final exported document are treated as distinct rendering targets with separate style rules, ensuring that the export output is professionally formatted and ATS-compatible regardless of the editor's visual styling.
+### 2. Stateless `httpOnly` Cookie Transportation
+JWT session tokens are stored exclusively inside `httpOnly`, `sameSite`, and environment-aware `secure` cookies (`maxAge: 86400`, `path: "/"`). Because client-side JavaScript cannot read `httpOnly` cookies, session tokens remain protected against Cross-Site Scripting (XSS) credential harvesting.
 
----
+### 3. Mutation Payload Sanitization
+The resume update route explicitly strips immutable and system fields (`_id`, `user_id`, `createdAt`, `updatedAt`) before forwarding updates to Mongoose `$set` operations, eliminating schema pollution and CastErrors.
 
-## Engineering Highlights
-
-TypeCast demonstrates several engineering decisions that distinguish it from a basic CRUD application.
-
-**Full-stack Next.js architecture** — the project uses Next.js as a genuine full-stack framework, not merely a static frontend layer. All API routes, authentication logic, database operations, and AI service calls are handled within the same application boundary through App Router route handlers.
-
-**TypeScript-first development** — TypeScript is applied across the entire codebase including Mongoose schema types, API request and response contracts, AI payload interfaces, and React component props. Dedicated interface files for AI, API, resume, and user types create a shared contract layer across frontend and backend code.
-
-**Structured AI integration** — each Gemini AI workflow is built around a purpose-engineered prompt rather than a generic completion call. The prompts encode output format constraints, length targets, professional tone requirements, and factual preservation rules. This is prompt engineering applied to a real product use case, not a demo.
-
-**Session security architecture** — JWT authentication via `httpOnly` cookies represents a considered choice over localStorage-based token storage. The decision prevents XSS-based session hijacking and keeps authentication state server-authoritative.
-
-**Mongoose pre-save middleware** — bcrypt hashing is applied as a Mongoose middleware hook rather than in route handler logic. This architectural decision means password hashing is enforced at the data layer regardless of which route or code path triggers a user save.
-
-**User-scoped ownership enforcement** — rather than trusting client-supplied user IDs, every database query derives the user context from the server-verified JWT payload. This makes IDOR attacks structurally impossible within the current API design.
-
-**Print-aware document rendering** — the resume is designed with two concurrent rendering targets: the interactive editor view and the print export view. The architectural separation ensures that styling applied to the application interface never contaminates the exported document.
-
-**Cached Mongoose connection** — the database connection is initialized once and cached in the global Node.js scope, preventing connection pool exhaustion across Next.js API route invocations.
-
-**Axios client abstraction** — client-side API calls are organized into domain-specific wrapper modules rather than scattered fetch calls, creating a maintainable API surface layer that decouples component logic from HTTP implementation details.
+### 4. Global Connection Caching & Pool Optimization
+Serverless route handlers can easily exhaust database connection pools during rapid invocations. In `src/lib/db.ts`, Mongoose connection promises are memoized on the Node.js `global` object, reusing active database sockets across subsequent requests.
 
 ---
 
-## Future Roadmap
+## Dual-Target Print Engine
 
-The following are identified enhancements for future development. These are planned capabilities, not current features.
+Rather than relying on heavy, resource-intensive server-side headless browser instances (such as Puppeteer or Playwright), TypeCast implements a client-side print compilation engine using dedicated CSS `@media print` rules:
 
-- **Multi-template engine** — switchable resume themes (Modern Tech, Minimalist Executive, Academic CV) with independent layout configurations
-- **Direct server-side PDF generation** — headless browser rendering for one-click PDF downloading without the browser print dialog
-- **Real-time ATS keyword highlighting** — in-canvas visual annotations showing matched and missing keywords from a target job description as the user edits
-- **Resume version history** — point-in-time snapshots of saved resumes with restore capability
-- **Markdown / LaTeX export** — downloadable source files for local compilation and further customization
+1. **Interface Suppression**: All administrative chrome, navigation bars, footer elements, split-screen editor inputs, and action buttons tagged `.no-print` are eliminated via `display: none !important`.
+2. **Color & Contrast Inversion**: Dark obsidian themes and glassmorphic card backdrops are stripped. Backgrounds reset to pure `#ffffff` and foreground text to high-contrast `#000000`.
+3. **Physical Sheet Dimensioning**: `@page { size: A4; margin: 12mm 15mm; }` enforces standard international A4 document boundaries.
+4. **Optical Scan Typography Switching**: The printable document canvas (`.resume-print-area`) dynamically overrides the application's sans-serif font family, switching to formal high-contrast serif typography (`Georgia, Cambria, "Times New Roman", Times, serif`). This matches executive document conventions and maximizes OCR parsing accuracy for enterprise ATS scanners.
+
+---
+
+## API Architecture & Endpoints
+
+All endpoints conform to standard HTTP semantics and return strongly typed JSON envelopes adhering to the `ApiResponse<T>` contract (`{ success: boolean, message?: string, data?: T }`).
+
+### Authentication Domain
+
+- **`POST /api/register`**
+  - Registers a new developer account.
+  - Body: `{ name: string, email: string, password: string, mobile?: string }`
+  - Status: `201 Created` / `400 Bad Request`
+
+- **`POST /api/login`**
+  - Authenticates credentials and sets an `httpOnly` session cookie (`token`).
+  - Body: `{ email: string, password: string }`
+  - Status: `200 OK` (Set-Cookie) / `401 Unauthorized` / `404 Not Found`
+
+- **`GET /api/auth/me`**
+  - Validates active session and retrieves user profile (excluding password).
+  - Status: `200 OK` / `401 Unauthorized`
+
+- **`POST /api/auth/logout`**
+  - Invalidates session by setting an expired cookie.
+  - Status: `200 OK`
+
+### Resume Persistence Domain
+
+- **`GET /api/resumes`**
+  - Lists all resumes belonging to the authenticated user, sorted by `updatedAt: -1`.
+  - Status: `200 OK` / `401 Unauthorized`
+
+- **`POST /api/resumes/create`**
+  - Instantiates a new structured resume record bound to the authenticated user ID.
+  - Body: `Partial<IResume>`
+  - Status: `201 Created` / `401 Unauthorized`
+
+- **`GET /api/resumes/:resumeId`**
+  - Retrieves a specific resume document enforcing owner scoping.
+  - Status: `200 OK` / `404 Not Found`
+
+- **`PUT /api/resumes/:resumeId`**
+  - Sanitizes payload and executes atomic `$set` update on the user-scoped document.
+  - Body: `Partial<IResume>`
+  - Status: `200 OK` / `404 Not Found`
+
+- **`DELETE /api/resumes/:resumeId`**
+  - Deletes a specific resume document enforcing owner scoping.
+  - Status: `200 OK` / `404 Not Found`
+
+### AI & ATS Intelligence Domain
+
+- **`POST /api/ai/generate-summary`**
+  - Generates a concise ATS-tailored executive summary (50–80 words).
+  - Auth: Protected.
+  - Body: `{ jobTitle: string, skills: string[], experienceLevel: string }`
+  - Status: `201 Created` / `400 Bad Request` / `401 Unauthorized`
+
+- **`POST /api/ai/generate-skills`**
+  - Generates an 8–12 item role-tailored technical and soft skills matrix.
+  - Body: `{ jobTitle: string, experienceLevel: string }`
+  - Status: `201 Created` / `400 Bad Request`
+
+- **`POST /api/ai/generate-experience-description`**
+  - Generates an 80–120 word role description tailored to seniority level.
+  - Body: `{ jobRole: string, technologies: string[], yearsOfExperience: number, experienceLevel: string }`
+  - Status: `201 Created` / `400 Bad Request`
+
+- **`POST /api/ai/generate-project-description`**
+  - Generates an 80–120 word technical project description with architectural context.
+  - Body: `{ projectName: string, projectTitle: string, projectType: string, role: string, technologies: string[], experienceLevel: string }`
+  - Status: `201 Created` / `400 Bad Request`
+
+- **`POST /api/ai/improve-content`**
+  - Polishes existing candidate text for action verbs and keyword density without inventing facts.
+  - Body: `{ content: string }`
+  - Status: `200 OK` / `400 Bad Request`
+
+- **`POST /api/ai/ats-score`**
+  - Evaluates complete resume text across 11 dimensions and returns validated JSON.
+  - Auth: Protected.
+  - Body: `{ resumeText: string }`
+  - Status: `200 OK` (`{ atsScore: number }`) / `400 Bad Request` / `401 Unauthorized` / `502 Bad Gateway`
+
+---
+
+## Repository Structure
+
+```
+TypeCast/
+├── src/
+│   ├── apis/                   # Domain-abstracted client HTTP services (Axios)
+│   │   ├── ai.api.ts           # AI inference & ATS scoring API wrappers
+│   │   ├── auth.api.ts         # Session lifecycle & credential API wrappers
+│   │   └── resume.api.ts       # Resume CRUD service wrappers
+│   ├── app/                    # Next.js 16 App Router hierarchy
+│   │   ├── api/                # Serverless RESTful route handlers
+│   │   │   ├── ai/             # 6 Gemini 3.6 Flash inference route handlers
+│   │   │   ├── auth/           # /api/auth/me and /api/auth/logout
+│   │   │   ├── login/          # /api/login route handler
+│   │   │   ├── register/       # /api/register route handler
+│   │   │   └── resumes/        # /api/resumes, /create, and /[resumeId] handlers
+│   │   ├── ats-checker/        # Dedicated ATS Compatibility Analyzer page
+│   │   ├── auth/               # Authenticated login and register view controllers
+│   │   ├── dashboard/          # Developer resume workspace and telemetry
+│   │   ├── resumes/builder/    # Split-screen reactive resume builder studio
+│   │   ├── globals.css         # Theme design tokens, glassmorphism, @media print CSS
+│   │   ├── layout.tsx          # Root layout specifying font variables & global context
+│   │   └── page.tsx            # Landing page showcasing platform capabilities
+│   ├── components/             # Reusable UI component modules
+│   │   ├── Footer.tsx          # Application footer
+│   │   └── Navbar.tsx          # Dynamic session-aware header navigation
+│   ├── context/
+│   │   └── AuthContext.tsx     # Global React Context providing session state
+│   ├── lib/                    # Server-side utilities and singletons
+│   │   ├── db.ts               # Cached Mongoose connection gateway
+│   │   ├── gemini.ts           # Centralized Google Gen AI SDK client
+│   │   ├── getCurrentUser.ts   # Cookie-based session resolution & JWT verification
+│   │   └── jwt.ts              # Cryptographic token signing and decoding
+│   ├── models/                 # Mongoose data models with lifecycle middleware
+│   │   ├── resume.model.ts     # Resume document schema & subdocument definitions
+│   │   └── user.model.ts       # User document schema with pre-save bcrypt hook
+│   └── types/                  # TypeScript interface contracts
+│       ├── ai.types.ts         # AI request payloads & ATS scoring schema
+│       ├── api.types.ts        # Generic ApiResponse<T> envelope interface
+│       ├── resume.types.ts     # Resume domain entities and subdocument types
+│       └── user.types.ts       # User account, auth payloads, and JWT signatures
+├── LICENSE                     # GNU General Public License v3.0
+├── next.config.ts              # Next.js compiler and build configuration
+├── package.json                # Project dependencies and script declarations
+├── postcss.config.mjs          # PostCSS configuration for Tailwind CSS 4
+└── tsconfig.json               # TypeScript strict configuration and module aliases
+```
+
+---
+
+## Roadmap
+
+- [ ] **Multi-Theme Compilation Engine**: Switchable layout presets (Modern Minimalist, Academic CV, Executive Serif) with independent typographical rules.
+- [ ] **Automated Headless PDF Generation**: Optional server-side PDF compilation worker (via Puppeteer) for direct downloads.
+- [ ] **In-Canvas Keyword Heatmap**: Real-time visual annotations highlighting matched and missing keywords against an uploaded Job Description.
+- [ ] **Point-in-Time Version Snapshotting**: Document revision history with one-click restore capabilities.
+- [ ] **Markdown / LaTeX Source Export**: Direct export of raw structured text for developers maintaining local TeX pipelines.
+
+---
+
+## License
+
+This project is licensed under the **GNU General Public License v3.0** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## Author
 
 **Sk Ramiz Raza**
-GitHub: [@Ramiz123](https://github.com/Ramiz123)
-
----
-
-*TypeCast is a personal portfolio project built for developer education and career tooling. No license file is currently included in the repository.*
+- GitHub: [@Ramiz123](https://github.com/Ramiz123)
