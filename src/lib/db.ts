@@ -11,12 +11,19 @@ const connectDB = async () => {
         return cached.conn;
     }
 
+    const mongoUri = process.env.MONGO_URI;
+    if (!mongoUri) {
+        throw new Error("MONGO_URI environment variable is not defined");
+    }
+
     if (!cached.promise) {
         const opts = {
             bufferCommands: false,
+            maxPoolSize: 10,
+            serverSelectionTimeoutMS: 5000,
         };
 
-        cached.promise = mongoose.connect(process.env.MONGO_URI as string, opts).then((mongoose: any) => mongoose);
+        cached.promise = mongoose.connect(mongoUri, opts).then((mongoose: any) => mongoose);
     }
 
     try {
@@ -24,7 +31,7 @@ const connectDB = async () => {
         return cached.conn;
     } catch (error) {
         cached.promise = null;
-        console.log(error);
+        console.error("MongoDB connection error:", error);
         throw new Error("Error connecting to MongoDB");
     }
 };

@@ -61,7 +61,9 @@ const resumeSchema = new mongoose.Schema<IResume>({
         type: [String],
         default: []
     }
-}, { timestamps: true })
+}, { timestamps: true });
+
+resumeSchema.index({ user_id: 1, updatedAt: -1 });
 
 const ResumeModel = mongoose.models.Resume || mongoose.model("Resume", resumeSchema);
 

@@ -22,7 +22,7 @@ export interface LoginBody {
     password: string
 }
 
-export interface JWTPayload{
-    userId: Types.ObjectId,
-    email?: string
+export interface JWTPayload {
+    userId: string | Types.ObjectId;
+    email?: string;
 }

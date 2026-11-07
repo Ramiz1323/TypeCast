@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
             }, { status: 404 });
         }
 
-        let matchPass = isExisted.comparePassword(password);
+        let matchPass = await isExisted.comparePassword(password);
         
         if (!matchPass) {
             return NextResponse.json<ApiResponse<null>>({
@@ -34,7 +34,8 @@ export async function POST(req: NextRequest) {
         cookiesStore.set("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            maxAge: 60 * 60 * 24,
+            sameSite: "lax",
+            maxAge: 60 * 60 * 24 * 7, // 7 days (matches JWT expiration)
             path: "/"
         });
 

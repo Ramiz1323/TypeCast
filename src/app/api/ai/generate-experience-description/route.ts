@@ -3,6 +3,8 @@ import { GenerateExperienceDescriptionBody } from "@/types/ai.types";
 import { ApiResponse } from "@/types/api.types";
 import { NextRequest, NextResponse } from "next/server";
 
+export const maxDuration = 30;
+
 export async function POST(req: NextRequest) {
     try {
         const body: GenerateExperienceDescriptionBody = await req.json();

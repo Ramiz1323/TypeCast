@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getCurrentUser } from "@/lib/getCurrentUser";
 
+export const maxDuration = 30;
+
 export async function POST(req: NextRequest) {
     try {
         try {

@@ -3,7 +3,7 @@ import { IUser } from "@/types/user.types";
 import bcrypt from 'bcrypt';
 
 interface IUserMethods {
-    comparePassword(candidatePassword: string): boolean;
+    comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
 type UserModelType = Model<IUser & IUserMethods> //second parameter is for statics and methods in schema
@@ -33,13 +33,13 @@ let userSchema = new mongoose.Schema<IUser & IUserMethods, UserModelType>(
     },
 }, { timestamps: true });
 
-userSchema.pre("save", function (): void {
+userSchema.pre("save", async function (): Promise<void> {
     if (!this.isModified("password")) return;
-    this.password = bcrypt.hashSync(this.password, 10);
+    this.password = await bcrypt.hash(this.password, 10);
 });
 
-userSchema.methods.comparePassword = function (candidatePassword: string): boolean {
-    return bcrypt.compareSync(candidatePassword, this.password);
+userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
+    return await bcrypt.compare(candidatePassword, this.password);
 }
 
 
